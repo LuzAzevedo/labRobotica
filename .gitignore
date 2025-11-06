@@ -1,0 +1,50 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.listing
+*.fdb_latexmk
+*.synctex.gz
+
+# Generated PDFs (opcional - descomente se não quiser versionar PDFs)
+# *.pdf
+
+# Temporary files
+main_temp.tex
+*_temp.tex
+
+# Minted output
+_minted-*/
+*.pygstyle
+*.pygtex
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files (mas mantém settings.json se necessário)
+.vscode/*
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build directories (se houver)
+build/
+dist/
+

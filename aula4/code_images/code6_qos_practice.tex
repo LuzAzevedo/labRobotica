@@ -1,0 +1,41 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+from rclpy.qos import QoSProfile, ReliabilityPolicy, QoSPresetProfiles
+
+sensor_qos = QoSPresetProfiles.SENSOR_DATA.value  # Best-effort, baixo depth
+reliable_qos = QoSProfile(depth=10)
+reliable_qos.reliability = ReliabilityPolicy.RELIABLE
+
+pub = self.create_publisher(String, 'scan_status', sensor_qos)
+sub = self.create_subscription(String, 'scan_status', cb, sensor_qos)
+
+cmd_pub = self.create_publisher(String, 'cmd', reliable_qos)
+cmd_sub = self.create_subscription(String, 'cmd', cb2, reliable_qos)
+\end{lstlisting}
+\end{document}
+

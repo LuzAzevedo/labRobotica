@@ -1,0 +1,6 @@
+# Arquivo de configuração para build.sh
+# Altere a linha abaixo para escolher qual aula compilar
+# Opções: aula1, aula2, aula3
+
+AULA=aula2
+

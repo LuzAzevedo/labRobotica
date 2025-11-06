@@ -1,0 +1,401 @@
+\title[Introdução ao ROS 2]{Aula 1 — Introdução ao ROS 2}
+\author[Marcato]{Professor: André L. M. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Curso de Engenharia Elétrica — Robótica e Automação Industrial}
+\date{}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Bibliografia}
+
+\begin{frame}
+	\frametitle{Livros Texto}
+	\only<1>
+	{
+		  \centering
+		  \includegraphics[width=4.5cm, height=6cm]{RobotProgramming.png}
+	}
+
+        \only<2>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{ROS_Springer.jpg}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Learning.jpg}
+			\end{column} 
+		\end{columns}
+	}	
+
+        \only<3>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{LivroPython1.png}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{LivroPython2.png}
+			\end{column} 
+		\end{columns}
+	}	
+\end{frame}
+
+% ---------- ROS2 Website ----------
+\begin{frame}{ROS Website}
+\begin{itemize}
+  \item \url{https://www.ros.org/}
+\end{itemize}
+
+% here add image of the ros2 website, the image is in the images folder
+\begin{figure}
+  \centering
+  \includegraphics[width=0.85\textwidth]{ros2website.png}
+\end{figure}
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Visão Geral}
+\justifying
+\begin{itemize}
+  \item Entender o ecossistema \textbf{ROS 2} \emph{(nós, tópicos, serviços, actions, parâmetros, etc.)}.
+  \item Desenvolver aplicações para controlar o movimento de um robô.
+  \item Organização do workspace (\texttt{colcon}, pacotes, \texttt{launch}).
+  \item Ferramentas essenciais: \texttt{ros2 CLI}, RViz2, rqt, tf2, simuladores.
+  \item Usar os simuladores (exemplo: \texttt{Gazebo}) para testar as aplicações.
+\end{itemize}
+\end{frame}
+
+% ---------- Objetivos ----------
+\begin{frame}{Objetivos da Aula}
+\begin{block}{Conceitos que serão abordados:}
+\begin{itemize}
+  \item \textbf{Áreas de aplicação do ROS}
+  \item \textbf{Como funciona um processo robótico}
+  \item \textbf{O que é ROS} - definição, conceitos fundamentais e arquitetura básica
+  \item \textbf{Principais diferenças entre ROS 1 e ROS 2}
+  \item \textbf{Evolução do ROS, história e distros}
+\end{itemize}
+\end{block}
+\end{frame}
+
+% ---------- Aplicações Industriais ----------
+\begin{frame}{Aplicações Industriais}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+% Vídeo do Nav2
+\vfill
+\begin{minipage}{\textwidth}
+\centering
+\href{https://www.youtube.com/watch?v=CYaN43TJANc}{\includegraphics[width=0.9\textwidth]{nav2_thumbnail.jpg}}
+\end{minipage}
+\begin{center}
+\textit{\small Robô feito com \href{https://docs.nav2.org/}{\textcolor{UFJFWine}{\textbf{Nav2}}}}
+\end{center}
+\vfill
+
+\column{.5\textwidth}
+\vfill
+\begin{itemize}
+  \item \textbf{Veículos Autônomos}
+  \item \textbf{Robôs de Serviço/Assistência}
+  \item \textbf{Robótica Móvel em Logística}
+  \item \textbf{Robôs Industriais Colaborativos}
+\end{itemize}
+\vfill
+\end{columns}
+\end{frame}
+
+% ---------- Aplicações Especializadas ----------
+\begin{frame}{Aplicações Especializadas}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+% Vídeo de Drones
+\vfill
+\begin{minipage}{\textwidth}
+\centering
+\href{https://www.youtube.com/watch?v=J_-m0ZgxgFk&t=201s}{\includegraphics[width=0.9\textwidth]{drones_thumbnail.jpg}}
+\end{minipage}
+\begin{center}
+\textit{\small \href{https://amiga.farm-ng.com/docs/amiga_quick_start/amiga-quick-start/}{\textcolor{UFJFWine}{\textbf{Robô agrícola}}} com integração com o ROS}
+\end{center}
+\vfill
+
+\column{.5\textwidth}
+\vfill
+\begin{itemize}
+  \item \textbf{Drones e UxVs}
+  \item \textbf{Agricultura de Precisão}
+  \item \textbf{Saúde e Reabilitação}
+  \item \textbf{Robótica Subaquática}
+\end{itemize}
+\vfill
+\end{columns}
+\end{frame}
+
+% ---------- ROS Robots ----------
+\begin{frame}{ROS Robots}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{rosrobots.png}
+\end{center}
+\begin{center}
+\href{https://robots.ros.org/}{\textcolor{UFJFWine}{\textbf{robots.ros.org}}}
+\end{center}
+\end{frame}
+
+% ---------- Ciclo em Robótica ----------
+\begin{frame}{Ciclo de um Processo em Robótica}
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={rectangle, draw=UFJFWine, fill=UFJFLightGray, text width=3.4cm, minimum height=2.2cm, align=center, font=\footnotesize, inner sep=0.1cm},
+    arrow/.style={->, thick, UFJFWine, line width=1pt}
+]
+
+% Caixas principais
+\node[box] (sensoriamento) at (-1.0,0) {
+    \textbf{Sensoriamento}\\[0.2cm]
+    \begin{itemize}
+        \item Câmeras, LiDAR, Radar
+        \item IMU, GPS/RTK
+        \item Ultrassom, ToF
+    \end{itemize}
+};
+
+\node[box] (processamento) at (3.2,0) {
+    \textbf{Processamento}\\[0.2cm]
+    \begin{itemize}
+        \item Percepção (Visão, SLAM)
+        \item Localização e Mapas
+        \item Planejamento e Controle
+    \end{itemize}
+};
+
+\node[box] (acao) at (7.4,0) {
+    \textbf{Atuação}\\[0.2cm]
+    \begin{itemize}
+        \item Motores/Servos
+        \item Manipuladores
+        \item Motores de Drones
+    \end{itemize}
+};
+
+% Setas (mais curtas)
+\draw[arrow] (sensoriamento.east) -- (processamento.west);
+\draw[arrow] (processamento.east) -- (acao.west);
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+% ---------- Diagrama de Sensores ----------
+\begin{frame}{Sensores, processamento e atuação em um veículo autônomo}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{autonomous-vehicle-sensors-components-expert-article-diagram.png}
+\end{center}
+\end{frame}
+
+% ---------- O que é ROS ----------
+\section{O que é ROS?}
+\begin{frame}{O que é ROS?}
+\begin{block}{Robot Operating System}
+\begin{itemize}
+  \item \textbf{Framework de software} para desenvolvimento de aplicações robóticas.
+  \item \textbf{Conjunto de ferramentas}, bibliotecas e convenções.
+  \item \textbf{Plataforma distribuída} para comunicação entre processos.
+  \item \textbf{Ecossistema} de pacotes e drivers para robótica.
+\end{itemize}
+\end{block}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{ROSINTRO.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Filosofia do ROS}
+\begin{itemize}
+  \item \textbf{Peer to peer}: Programas individuais se comunicam através de APIs definidas (mensagens ROS, serviços, etc.).
+  \item \textbf{Distribuído}: Programas podem ser executados em múltiplos computadores e se comunicar pela rede.
+  \item \textbf{Multi-linguagem}: Módulos ROS podem ser escritos em qualquer linguagem para a qual existe uma biblioteca cliente (C++, Python, MATLAB, Java, etc.).
+  \item \textbf{Leve}: Bibliotecas independentes são envolvidas com uma camada fina do ROS.
+  \item \textbf{Livre e open-source}: A maioria do software ROS é open-source e gratuito para uso.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Características Principais do ROS}
+\begin{itemize}
+  \item \textbf{Modular}: sistema distribuído de nós independentes.
+  \item \textbf{Reutilizável}: bibliotecas e ferramentas compartilhadas.
+  \item \textbf{Multi-linguagem}: C++, Python, Java, etc.
+  \item \textbf{Multi-plataforma}: Linux, Windows, macOS.
+  \item \textbf{Open Source}: desenvolvimento colaborativo.
+\end{itemize}
+\end{frame}
+
+% ---------- De ROS1 a ROS2 ----------
+\section{Do ROS 1 ao ROS 2}
+\begin{frame}{Motivações para o ROS 2}
+\begin{itemize}
+    \item \textbf{ROS 1 não foi projetado} com todos os casos de uso atuais em mente
+    \item \textbf{Projetado principalmente para pesquisa}
+    \item \textbf{Inicialmente projetado apenas para PR2}
+    \item \textbf{Nunca realmente projetado para tempo real}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Motivações para o ROS 2 - Novos Usos}
+\begin{itemize}
+    \item \textbf{Equipes de robôs}
+    \item \textbf{Não adequado para tipos de microcontroladores bare-metal}
+    \item \textbf{Comunicação sem ser em tempo real}
+    \item \textbf{Redes com perda de dados}
+    \item \textbf{Usos em pesquisa \& indústria} (ex: certificação)
+    \item \textbf{Redesign da API}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Principais Diferenças (ROS 1 vs ROS 2)}
+\begin{itemize}
+  \item \textbf{Suporte para outros SOs}: ROS 2 funciona em Windows, macOS e Linux
+  \item \textbf{Pelo menos C++11 e Python 3}: (C++03 antes do Noetic e Python 2 no ROS 1)
+  \item \textbf{Uso de middleware pronto}: (em oposição ao middleware customizado)
+  \item \textbf{Integração mais próxima com Python}: (ex: arquivos de launch são em Python)
+  \item \textbf{Nós em tempo real}
+  \item \textbf{Mudanças técnicas internas}: menos mudanças conceituais
+\end{itemize}
+\end{frame}
+
+
+
+
+
+% ---------- DDS ----------
+\begin{frame}{DDS (Data Distribution Service)}
+\begin{columns}[T,onlytextwidth]
+\column{.4\textwidth}
+\begin{itemize}
+  \item \textbf{Padrão} que permite troca de dados usando um padrão publish-subscribe
+  \item \textbf{Middleware} que fornece alto desempenho, escalável e forma segura para nós trocarem dados e se comunicarem
+  \item \textbf{Usado como camada de comunicação} para ROS 2
+\end{itemize}
+\column{.6\textwidth}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{rosstructure.png}
+\end{center}
+\end{columns}
+\end{frame}
+
+% ---------- Arquitetura ROS2 / DDS ----------
+\section{Arquitetura DDS do ROS 2}
+\begin{frame}{Arquitetura DDS do ROS 2}
+\begin{itemize}
+  \item \textbf{DDS (Data Distribution Service)}: padrão OMG para sistemas distribuídos.
+  \item \textbf{Descoberta automática}: nós se encontram dinamicamente.
+  \item \textbf{QoS configurável}: confiabilidade, durabilidade, deadlines.
+  \item \textbf{Transporte flexível}: TCP, UDP, shared memory, etc.
+  % DDS diagram image
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{dds.png}
+  \end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Camadas de Software}
+\begin{itemize}
+  \item \textbf{Aplicação}: nós (C++ \texttt{rclcpp}, Python \texttt{rclpy}), launch, parâmetros.
+  \item \textbf{ROS 2 Client Libraries}: rclcpp, rclpy.
+  \item \textbf{RMW}: abstração do middleware DDS.
+  \item \textbf{DDS}: descoberta, \emph{pub/sub}, QoS, \emph{transport}.
+\end{itemize}
+\end{frame}
+
+% ---------- Evolução e História ----------
+
+\section{Evolução, História e Distros}
+\begin{frame}
+	\frametitle{História do ROS}
+	\begin{itemize}
+		\scriptsize
+		\item \href{https://www.linkedin.com/in/eric-berger-806b3b3/}{Eric Berger} e {Keenan Wyrobek} começaram o Doutorado (Ph.D) em Stanford...
+		\item Buscaram levantar fundos para o desenvolvimento do projeto o Linux da Robótica.
+		\item PR2 (Personal Robotics) - \href{https://www.youtube.com/watch?v=oyHWkQcin7I&feature=youtu.be}{\underline{ver vídeo}}
+		\item Atualmente: Ecossistema ROS - Qualquer grupo pode iniciar um repositório de código do ROS ("\textit{federated model}")
+	\end{itemize}
+			
+	\begin{table}
+		\begin{tabular}{ | >{\centering\arraybackslash}m{1cm}  >{\centering\arraybackslash}m{7cm} | }  
+			\hline
+			\includegraphics[width=0.6cm,height=0.6cm]{stanford.png} & Stanford Personal Robotics Program (janeiro de 2007)\\
+			\hline
+			\includegraphics[width=0.6cm,height=0.6cm]{willowgarage.jpg} & Laboratório de pesquisa em robótica e incubadora tecnológica (Novembro de 2007) \\
+			\hline
+			\includegraphics[width=0.6cm,height=0.6cm]{openrobotics.png} & Open Source Robotics Foundation (OSRF) ou Open Robotics (Fevereiro de 2013)\\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\centering
+	\scriptsize
+	"Don't let anyone crush your crazy" ou "Não deixe ninguém esmagar sua loucura"
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{RosCon - ROS Conference (\href{https://roscon.ros.org/2024/} {https://roscon.ros.org/2024/})} 
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+        	\centering
+                \only<1>
+                {
+    	          \includegraphics[width=0.75\textwidth]{ROSCon1.png} \\~\\
+                }
+                \only<2>
+                {
+    	          \includegraphics[width=6cm,height=3.5cm]{ROSCon2.png} \\~\\
+                }
+            \end{column}
+            \begin{column}{0.5\textwidth}
+        	\scriptsize
+        	Conjugada com o IROS (ou ICRA):
+        	\begin{itemize}
+            		\item \href{https://www.iros25.org/}{IEEE/RSJ International Conference on Intelligent Robots and Systems}
+				\item \href{https://2025.ieee-icra.org/}{International Conference on Robotics and Automation}
+            	\end{itemize}
+            \end{column}
+        \end{columns}
+\end{frame}
+
+---------- Distribuições ----------
+\begin{frame}{Distribuições ROS}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{rosdistros.png}
+\end{center}
+\end{frame}
+
+% \input{\aulanum/sections/distros_ros1.tex}
+% \input{\aulanum/sections/distros_ros2.tex}
+% \input{\aulanum/sections/virtual_box.tex}
+
+
+% ---------- Referências ----------
+\begin{frame}{Referências e Recursos}
+\begin{itemize}
+  \item \textbf{Site}: \url{https://www.ros.org/}
+  \item \textbf{Documentação ROS 2}: \url{https://docs.ros.org/}
+  \item \textbf{Tutorials e Examples}: \url{https://docs.ros.org/en/ros2\_packages.html}
+  \item \textbf{Awesome ROS 2 (curadoria de pacotes)}: buscar por ``awesome-ros2'' no GitHub.
+\end{itemize}
+\end{frame}
+
+% ---------- Encerramento ----------
+\begin{frame}
+\centering
+\Large Dúvidas? \\
+\bigskip
+\small \texttt{andre.marcato@ufjf.br} \quad
+\end{frame}
+

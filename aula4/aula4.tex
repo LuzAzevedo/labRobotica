@@ -1,0 +1,197 @@
+% ---------- Metadata ----------
+\title[Aula 4]{Aula 4 - ROS 2 (Python) — Publishers \& Subscribers}
+\author[Marcato]{Professor: André L. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+% ---------- Conteúdo ----------
+\section{Conceitos Fundamentais}
+
+% --- Slide 1: Publishers & Subscribers — conceitos ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{ROS 2 (Python) — Publishers \& Subscribers}}}
+    \begin{itemize}
+      \item \textbf{Publisher}: node que \textbf{envia} mensagens para um \textbf{tópico}.
+      \item \textbf{Subscriber}: node que \textbf{recebe} mensagens de um \textbf{tópico}.
+      \item Desacoplamento por \textbf{tópicos} (pub/sub); múltiplos publishers/subscribers por tópico.
+      \item Comunicação \textbf{assíncrona} baseada em callbacks; qualidade controlada por \textbf{QoS}.
+    \end{itemize}
+  \end{frame}
+  
+  % --- Slide 2: Nó mínimo (rclpy) ---
+  \begin{frame}[fragile]{Nó mínimo em \texttt{rclpy}}
+    \begin{itemize}
+      \item Elementos: \texttt{rclpy.init()}, classe \texttt{Node}, \texttt{rclpy.spin(node)}, \texttt{rclpy.shutdown()}.
+      \item Componentes comuns: publisher(es), subscriber(s), \textbf{timers}, \textbf{callbacks}, \textbf{logs}.
+      \item Encapsulamos lógica em uma subclasse de \texttt{Node}.
+    \end{itemize}
+  
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code1_minimal.png}
+  \end{center}
+  \end{frame}
+  
+  % --- Slide 3: Timers, callbacks e logs ---
+  \begin{frame}[fragile]{Timers, callbacks e logs}
+    \begin{itemize}
+      \item \textbf{Timer}: executa uma callback em período fixo (\texttt{create\_timer}).
+      \item \textbf{Callback}: função que roda em resposta a evento (timer, mensagem recebida, etc.).
+      \item \textbf{Logs}: \texttt{self.get\_logger().info()/warn()/error()}.
+    \end{itemize}
+  
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code2_timer.png}
+  \end{center}
+  \end{frame}
+
+\section{QoS (Quality of Service)}
+  
+  % --- Slide 4: QoS — noções básicas ---
+  \begin{frame}[fragile]{QoS — noções básicas}
+    \begin{itemize}
+      \item \textbf{depth} (History/KeepLast): tamanho do buffer de mensagens.
+      \item \textbf{reliability}: \texttt{RELIABLE} (entrega garantida) vs \texttt{BEST\_EFFORT} (melhor esforço).
+      \item \textbf{durability}: \texttt{VOLATILE} (apenas novas) vs \texttt{TRANSIENT\_LOCAL} (late-joiner recebe últimas).
+      \item Perfis prontos: \texttt{QoSPresetProfiles.SENSOR\_DATA}, \texttt{DEFAULT}, etc.
+    \end{itemize}
+  
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code3_qos_basic.png}
+  \end{center}
+  \end{frame}
+
+\section{Implementação Prática}
+  
+  % --- Slide 5: Publisher (Python) ---
+  \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{Publisher em Python (minimal\_publisher.py)}}}
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code4_publisher.png}
+  \end{center}
+  \end{frame}
+  
+  % --- Slide 6: Subscriber (Python) ---
+  \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{Subscriber em Python (minimal\_subscriber.py)}}}
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code5_subscriber.png}
+  \end{center}
+  \end{frame}
+  
+  % --- Slide 7: Executando (do workspace) ---
+  \begin{frame}[fragile]{Executar publisher \& subscriber}
+    \begin{itemize}
+      \item Em terminais separados, com o ambiente \textbf{sourced}.
+    \end{itemize}
+  
+    \begin{columns}[T,onlytextwidth]
+      \begin{column}{0.48\textwidth}
+        \textbf{Terminal 1 — Publisher}
+        \begin{lstlisting}[style=bashstyle]
+  $ source ~/ros2_ws/install/setup.bash
+  $ ros2 run my_py_pkg minimal_publisher
+        \end{lstlisting}
+      \end{column}
+      \begin{column}{0.48\textwidth}
+        \textbf{Terminal 2 — Subscriber}
+        \begin{lstlisting}[style=bashstyle]
+  $ source ~/ros2_ws/install/setup.bash
+  $ ros2 run my_py_pkg minimal_subscriber
+        \end{lstlisting}
+      \end{column}
+    \end{columns}
+  \end{frame}
+
+\section{QoS na Prática}
+  
+  % --- Slide 8: Ajustando QoS no código ---
+  \begin{frame}[fragile]{QoS na prática (exemplo)}
+    \begin{itemize}
+      \item Combine \textbf{publisher} e \textbf{subscriber} com QoS compatível.
+      \item Útil para sensores (\texttt{BEST\_EFFORT}) vs controle/estado (\texttt{RELIABLE}).
+    \end{itemize}
+  
+  \begin{center}
+  \includegraphics[width=0.95\textwidth]{code6_qos_practice.png}
+  \end{center}
+  \end{frame}
+
+ \section{Atividade}
+  \begin{frame}[fragile]{Atividade: criando um publisher e subscriber (Py)}
+    \begin{itemize}
+      \item No \texttt{ros2\_ws}, crie um pacote Python com \textbf{dois nós}:
+        \textbf{publisher} envia dois inteiros; \textbf{subscriber} recebe e imprime a soma.
+      \item Use \texttt{std\_msgs/msg/Int64MultiArray} (evita criar interfaces novas).
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]{Atividade: Passo 1}
+    \textbf{1) Criar pacote e registrar executáveis}
+    \begin{lstlisting}[style=bashstyle]
+  $ cd ~/ros2_ws/src
+  $ ros2 pkg create --build-type ament_python my_int_adder_py --dependencies rclpy std_msgs
+  # Em setup.py, adicione em entry_points:
+  # 'console_scripts': [
+  #   'int_publisher = my_int_adder_py.int_publisher:main',
+  #   'int_sum_subscriber = my_int_adder_py.int_sum_subscriber:main',
+  # ],
+    \end{lstlisting}
+  \end{frame}
+
+  \begin{frame}[fragile]{Atividade: Passo 2}
+    \textbf{2) Estrutura de arquivos (mínima)}
+    \begin{lstlisting}[style=bashstyle]
+  my_int_adder_py/
+    my_int_adder_py/
+      __init__.py
+      int_publisher.py
+      int_sum_subscriber.py
+    package.xml
+    setup.py
+    \end{lstlisting}
+  \end{frame}
+
+  \begin{frame}[fragile]{Atividade: Passos 3 e 4}
+    \textbf{3) Implemente os nós}
+    \begin{itemize}
+      \item \texttt{int\_publisher.py}: cria \texttt{rclpy.Node}, \texttt{create\_publisher(Int64MultiArray, 'ints', 10)}, usa timer para publicar dois inteiros periodicamente.
+      \item \texttt{int\_sum\_subscriber.py}: cria \texttt{create\_subscription(Int64MultiArray, 'ints', callback, 10)} e imprime a soma dos dois inteiros recebidos.
+    \end{itemize}
+  
+    \vspace{0.5em}
+    \textbf{4) Build e execução}
+    \begin{lstlisting}[style=bashstyle]
+  $ cd ~/ros2_ws && colcon build --symlink-install
+  $ source install/setup.bash
+  # Terminal 1:
+  $ ros2 run my_int_adder_py int_publisher
+  # Terminal 2:
+  $ ros2 run my_int_adder_py int_sum_subscriber
+    \end{lstlisting}
+  \end{frame}
+  
+  
+% Disable automatic section TOC for remaining frames
+\AtBeginSection[]{}
+
+\begin{frame}{Referências e Recursos}
+\begin{itemize}
+  \item \url{https://docs.ros.org/en/}
+  \item \url{https://github.com/ros2/examples}
+  \item \url{https://index.ros.org/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\centering
+\Large Dúvidas? \\
+\bigskip
+\small \texttt{andre.marcato@ufjf.br}
+\end{frame}
+

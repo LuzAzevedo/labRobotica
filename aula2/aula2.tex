@@ -1,0 +1,330 @@
+% ---------- Metadata ----------
+\title[Configuração e Conceitos ROS 2]{Aula 2 — Configuração do Ambiente e Conceitos Fundamentais ROS 2}
+\author[Marcato]{Professor: André L. M. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+\section{Nodes (Nós)}
+
+\begin{frame}{ROS 2: Nodes, Tópicos, Serviços, Ações e Parâmetros}
+  \centering
+  \includegraphics[width=1.0\textwidth]{ros2_diagram.png}
+  \end{frame}
+
+  \begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html}{{Nós (Nodes) — ROS 2}}}
+    \begin{itemize}
+      \item \textbf{Nodes} são executáveis (processos).
+      \item São \textbf{desacoplados} (processos independentes) e podem rodar em \textbf{dispositivos diferentes}.
+      \item \textbf{Comunicação}: Tópicos (pub/sub), Serviços (req/resp) e Ações; configuração via \textbf{Parâmetros}.
+      \item Implementados com \textbf{rclcpp} (C++) ou \textbf{rclpy} (Python); exemplos: drivers, mapeamento, planejamento, UI.
+    \end{itemize}
+    
+    \vspace{0.8em}
+    \textbf{Executar um Node (distribuição instalada):}
+    \begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+|\nocopy{\textdollar\ }|ros2 run <pacote> <executavel>
+    \end{bashprompt}
+  
+    \vspace{0.4em}
+    \textbf{Executar um Node (seu workspace - overlay):}
+    \begin{bashprompt}
+|\nocopy{\textdollar\ }|colcon build --symlink-install
+|\nocopy{\textdollar\ }|source install/setup.bash
+|\nocopy{\textdollar\ }|ros2 run <pacote> <executavel>
+    \end{bashprompt}
+  \end{frame}
+  
+  % --- Slide 2: Descoberta e inspeção de nodes ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html}{{Nós (Nodes) — comandos úteis}}}
+  \begin{itemize}
+    \item \texttt{ros2 node list} — lista os nodes ativos.
+    \item \texttt{ros2 node info <node\_name>} — mostra publishers, subscribers, serviços e ações do node.
+    \item \texttt{ros2 param ...} — inspeciona/ajusta parâmetros de um node em tempo de execução.
+    \item \texttt{ros2 run} — inicia um executável de um pacote.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 node list
+|\nocopy{\textdollar\ }|ros2 node info <node_name>
+  \end{bashprompt}
+
+  \vspace{0.3em}
+  \begin{bashprompt}
+# Parametros (exemplos)
+|\nocopy{\textdollar\ }|ros2 param list <node_name>
+|\nocopy{\textdollar\ }|ros2 param get  <node_name> <param_name>
+|\nocopy{\textdollar\ }|ros2 param set  <node_name> <param_name> <value>
+  \end{bashprompt}
+\end{frame}
+
+\section{Topics (Tópicos)}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html}{Tópicos (Topics)}}
+  \begin{itemize}
+    \item \textbf{Tópicos} são fluxos de dados com semântica \emph{publish/subscribe}.
+    \item São identificados unicamente pelo \textbf{nome}; nodes publicam e assinam para transferir dados.
+    \item Um node pode \textbf{publicar} e \textbf{assinar} qualquer número de tópicos simultaneamente.
+    \item É um dos \textbf{principais meios} de mover dados entre nodes e partes do sistema.
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Comandos básicos:}
+  \begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 topic list
+|\nocopy{\textdollar\ }|ros2 topic echo <topic_name>
+|\nocopy{\textdollar\ }|ros2 topic info <topic_name>
+|\nocopy{\textdollar\ }|ros2 interface show <topic_name>
+|\nocopy{\textdollar\ }|ros2 topic pub <topic_name> <msg_type> '<args>'
+|\nocopy{\textdollar\ }|ros2 topic hz <topic_name>
+  \end{bashprompt}
+\end{frame}
+
+\begin{frame}{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html}{\textbf{Comandos ROS 2 Topics}}}
+  \begin{itemize}
+    \item \texttt{ros2 topic list} — lista todos os tópicos ativos no sistema.
+    \item \texttt{ros2 topic echo} — mostra, em tempo real, as mensagens que chegam nesse tópico.
+    \item \texttt{ros2 topic info} — exibe detalhes do tópico: tipo de mensagem, pub./sub. etc.
+    \item \texttt{ros2 interface show} — imprime a definição do tipo de mensagem (campos e tipos).
+    \item \texttt{ros2 topic pub} — publica uma mensagem manualmente (use \texttt{-1} para 1x, ou \texttt{-r <freq>} para repetir).
+    \item \texttt{ros2 topic hz} — mede a frequência das mensagens que chegam ao tópico.
+  \end{itemize}
+\end{frame}
+
+\section{Services (Serviços)}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html}{{Serviços (Services) — ROS 2}}}
+  \begin{itemize}
+    \item \textbf{Serviços} implementam comunicação \textit{request/response} (chamada e resposta) entre nodes.
+    \item Usados para operações pontuais/síncronas (ex.: resetar um mapa, salvar estado, consultar algo).
+    \item Cada serviço tem um \textbf{tipo} (req/resp) e um \textbf{nome} único; um node fornece (server) e outro usa (client).
+    \item Interfaces definidas em arquivos \texttt{.srv}; inspeção com \texttt{ros2 interface show}.
+  \end{itemize}
+
+  \vspace{0.8em}
+  \textbf{Exemplo: chamar um serviço}
+  \begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 service call <service_name> <srv_type> '{<campos_da_req>}'
+  \end{bashprompt}
+\end{frame}
+
+% --- Slide 2: Descoberta e inspeção de serviços ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html}{{Serviços — comandos úteis}}}
+  \begin{itemize}
+    \item \texttt{ros2 service list} — lista serviços disponíveis.
+    \item \texttt{ros2 service type <service\_name>} — mostra o tipo \texttt{.srv} daquele serviço.
+    \item \texttt{ros2 service find <srv\_type>} — encontra serviços de um tipo específico.
+    \item \texttt{ros2 interface show <pkg/srv/Tipo>} — exibe a definição da interface (request/response).
+    \item \texttt{ros2 service call} — envia uma requisição e imprime a resposta.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 service list
+$ ros2 service type <service_name>
+$ ros2 service find <srv_type>
+$ ros2 interface show <pkg/srv/Tipo>
+$ ros2 service call <service_name> <srv_type> '{<campos_da_req>}'
+  \end{lstlisting}
+\end{frame}
+
+\section{Parameters (Parâmetros)}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html}{{Parâmetros (Parameters) — ROS 2}}}
+  \begin{itemize}
+    \item \textbf{Parâmetros} são pares nome/valor associados a um node, usados para \textbf{configuração} em tempo de inicialização ou execução.
+    \item Suportam tipos simples (inteiros, floats, bool, strings) e listas; vivem no \textbf{escopo do node}.
+    \item Podem ser lidos/alterados via CLI, arquivos YAML ou API (\texttt{rclcpp}/\texttt{rclpy}).
+    \item Boas práticas: definir \texttt{defaults}, validar e documentar nomes e tipos.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \textbf{Exemplos básicos:}
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 param list <node_name>
+$ ros2 param get  <node_name> <param_name>
+$ ros2 param set  <node_name> <param_name> <value>
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html}{{Parâmetros — comandos úteis}}}
+  \begin{itemize}
+    \item \texttt{ros2 param describe <node\_name> <param>} — mostra tipo, leitura/escrita e descrição.
+    \item \texttt{ros2 param dump <node\_name>} — exporta todos os parâmetros do node para YAML.
+    \item \texttt{ros2 param load <node\_name> file.yaml} — carrega parâmetros a partir de YAML.
+    \item Iniciar um node já com YAML: \texttt{--ros-args --params-file file.yaml}.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 param describe <node_name> <param_name>
+$ ros2 param dump <node_name> > params.yaml
+$ ros2 param load <node_name> params.yaml
+$ ros2 run <pkg> <exe> --ros-args --params-file params.yaml
+  \end{lstlisting}
+\end{frame}
+
+\section{Actions (Ações)}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html}{{Ações (Actions) — ROS 2}}}
+  \begin{itemize}
+    \item \textbf{Ações} modelam tarefas potencialmente \textbf{longas}, com \textbf{goal}, \textbf{feedback} contínuo e \textbf{resultado} final.
+    \item Separação cliente/servidor: um node envia \textbf{metas} (goals) e outro executa a ação.
+    \item Úteis quando serviços seriam longos/demorados; permitem \textbf{cancelamento} e monitoramento.
+    \item Interfaces em \texttt{.action} (Goal/Result/Feedback); inspeção com \texttt{ros2 interface show}.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \textbf{Enviar uma goal (com feedback):}
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 action send_goal <action_name> <pkg/action/Tipo> \
+  '{<campos_goal>}' --feedback
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html}{{Ações — comandos úteis}}}
+  \begin{itemize}
+    \item \texttt{ros2 action list} — lista ações disponíveis (\texttt{-t} para exibir tipos).
+    \item \texttt{ros2 action info <action\_name>} — mostra servidores/clients e estado.
+    \item \texttt{ros2 interface show <pkg/action/Tipo>} — exibe Goal/Result/Feedback.
+    \item \texttt{ros2 action send\_goal} — envia goals; use \texttt{--feedback} e \texttt{--cancel}.
+  \end{itemize}
+
+  \vspace{0.6em}
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 action list
+$ ros2 action list -t
+$ ros2 action info <action_name>
+$ ros2 interface show <pkg/action/Tipo>
+$ ros2 action send_goal <action_name> <pkg/action/Tipo> '{...}' --feedback
+  \end{lstlisting}
+\end{frame}
+
+\section{Instalação e Ambiente}
+
+% --- SLIDE 1: Set locale ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{ROS 2 Humble no Ubuntu 22.04 — Set locale}}}
+  \begin{itemize}
+    \item Garanta uma \textbf{locale UTF-8} antes de instalar.
+  \end{itemize}
+
+  \begin{bashprompt}
+|\nocopy{\textdollar\ }|locale   # verifique se ha UTF-8
+|\nocopy{\textdollar\ }|sudo apt update && sudo apt install -y locales
+|\nocopy{\textdollar\ }|sudo locale-gen en_US en_US.UTF-8
+|\nocopy{\textdollar\ }|sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+|\nocopy{\textdollar\ }|export LANG=en_US.UTF-8
+|\nocopy{\textdollar\ }|locale   # verifique novamente
+  \end{bashprompt}
+\end{frame}
+
+% --- SLIDE 2: Enable Universe + preparar fontes (ros2-apt-source) ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{ROS 2 Humble — Repositórios (Universe + ros2-apt-source)}}}
+  \begin{itemize}
+    \item Habilite o \textbf{repositório Universe} e instale o pacote de fontes do ROS 2.
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ sudo apt install -y software-properties-common
+$ sudo add-apt-repository universe
+$ sudo apt update && sudo apt install -y curl
+$ export ROS_APT_SOURCE_VERSION=$(curl -s \\
+  https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | \\
+  grep -F "tag_name" | awk -F\" '{print $4}')
+$ curl -L -o /tmp/ros2-apt-source.deb \\
+  "https://github.com/ros-infrastructure/ros-apt-source/\\
+  releases/download/\${ROS_APT_SOURCE_VERSION}/\\
+  ros2-apt-source_\${ROS_APT_SOURCE_VERSION}.\\
+  \$(. /etc/os-release && echo \${UBUNTU_CODENAME:-\${VERSION_CODENAME}})_all.deb"
+$ sudo dpkg -i /tmp/ros2-apt-source.deb
+  \end{lstlisting}
+\end{frame}
+
+% --- SLIDE 3: Atualizar sistema + instalar pacotes ROS 2 ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{ROS 2 Humble — Instalação dos pacotes}}}
+  \begin{itemize}
+    \item Atualize os índices e pacotes
+    \item Vamos trabalhar com \texttt{ros-humble-desktop} (com GUI)
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ sudo apt update
+$ sudo apt upgrade -y
+$ sudo apt install -y ros-humble-desktop
+  \end{lstlisting}
+\end{frame}
+
+% --- SLIDE 4: Configuração de ambiente ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{ROS 2 Humble — Configurar ambiente}}}
+  \begin{itemize}
+    \item \textbf{Source} do setup na sessão atual.
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ source /opt/ros/humble/setup.bash
+  \end{lstlisting}
+
+  \vspace{0.4em}
+  \begin{itemize}
+    \item (Opcional) Adicionar ao \texttt{~/.bashrc} para carregar automaticamente.
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+$ exec bash
+  \end{lstlisting}
+\end{frame}
+
+% --- SLIDE 5: Teste rápido (talker/listener) ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{ROS 2 Humble — Teste rápido (talker/listener)}}}
+  \begin{itemize}
+    \item Verifique C++ e Python com os exemplos do \texttt{ros-humble-desktop}.
+  \end{itemize}
+
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \textbf{Terminal 1:}
+      \begin{lstlisting}[style=bashstyle]
+$ source /opt/ros/humble/setup.bash
+$ ros2 run demo_nodes_cpp talker
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Terminal 2:}
+      \begin{lstlisting}[style=bashstyle]
+$ source /opt/ros/humble/setup.bash
+$ ros2 run demo_nodes_py listener
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% Disable automatic section TOC for remaining frames
+\AtBeginSection[]{}
+
+\begin{frame}{Referências e Recursos}
+\begin{itemize}
+  \item \url{https://docs.ros.org/en/}
+  \item \url{https://github.com/ros2/examples}
+  \item \url{https://index.ros.org/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\centering
+\Large Dúvidas? \\
+\bigskip
+\small \texttt{andre.marcato@ufjf.br}
+\end{frame}

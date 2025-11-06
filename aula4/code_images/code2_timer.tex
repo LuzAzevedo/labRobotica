@@ -1,0 +1,39 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+class TimerExample(Node):
+    def __init__(self):
+        super().__init__('timer_example')
+        self.i = 0
+        self.timer = self.create_timer(0.5, self.on_timer)  # 2 Hz
+
+    def on_timer(self):
+        self.i += 1
+        self.get_logger().info(f'Tick #{self.i}')
+\end{lstlisting}
+\end{document}
+

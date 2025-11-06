@@ -1,0 +1,78 @@
+\section{Virtual Box}
+
+\begin{frame}{Passo a Passo - Virtual Box}
+    \begin{itemize}
+        \item Instalar o VirtualBox no Windows (Host)
+        \item Configurar uma máquina virtual para rodar o Ubuntu (Guest)
+        \item Preparar o ambiente para desenvolvimento em ROS
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Passo 1 - Baixar o VirtualBox}
+    \begin{itemize}
+        \item Acesse o site oficial: \texttt{https://www.virtualbox.org/}
+        \item Clique em \textbf{Downloads}
+        \item Selecione a versão para Windows hosts
+    \end{itemize}
+    \includegraphics[width=0.7\textwidth]{vitrual_box.png} 
+\end{frame}
+
+\begin{frame}{Passo 2 - Instalar o VirtualBox}
+    \begin{itemize}
+        \item Execute o instalador baixado
+        \item Siga as instruções padrão (Next, Next, Install)
+        \item Permita instalação dos drivers de rede quando solicitado
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Passo 3 - Baixar a imagem do Ubuntu}
+    \begin{itemize}
+        \item Acesse: \texttt{https://ubuntu.com/download/desktop}
+        \item Baixe o arquivo \texttt{.iso} da versão desejada (recomendado: LTS)
+        \item Compatível com o ROS Noetic: Ubuntu 20.04.6 LTS (Focal Fossa)
+    \end{itemize}
+    \includegraphics[width=0.7\textwidth]{ubuntu.png}
+    \end{frame}
+
+\begin{frame}{Passo 4 - Criar Máquina Virtual}
+    \begin{itemize}
+        \item Abra o VirtualBox e clique em \textbf{Novo}
+        \item Nome: Ubuntu
+        \item Tipo: Linux
+        \item Versão: Ubuntu (64-bit)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Passo 5 - Configurar a Máquina Virtual}
+    \begin{itemize}
+        \item Memória RAM: recomendado pelo menos 4096 MB
+        \item Disco rígido virtual: \textbf{Criar novo}, formato VDI, dinamicamente alocado
+        \item Tamanho do disco: pelo menos 20 GB
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Passo 6 - Instalar o Ubuntu}
+    \begin{itemize}
+        \item Inicie a máquina virtual
+        \item Selecione o arquivo \texttt{.iso} do Ubuntu como mídia de boot
+        \item Siga o assistente de instalação do Ubuntu
+        \item Defina um nome de usuário e senha
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dicas Finais}
+    \begin{itemize}
+        \item Instale o \textbf{Guest Additions} para melhor integração (opcional)
+        \item Ative o \textbf{modo de tela cheia} para melhor experiência
+        \item Salve estados da máquina para retomá-la rapidamente
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Resumo}
+    \begin{itemize}
+        \item VirtualBox instalado no Windows
+        \item Ubuntu instalado como máquina virtual
+        \item Ambiente pronto para aplicações de Robótica Móvel
+        \item Existem máquinas virtuais já com ROS Noetic e outras versões previamente instalados
+    \end{itemize}
+\end{frame}

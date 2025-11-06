@@ -1,0 +1,303 @@
+% ---------- Metadata ----------
+\title[Aula 3]{Aula 3 - Workspace e pacotes }
+\author[Marcato]{Professor: André L. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+% ---------- Conteúdo ----------
+
+\section{Workspace com colcon}
+
+\begin{frame}{O que é um Workspace ROS 2?}
+\begin{itemize}
+  \item Um \textbf{workspace ROS 2} é basicamente um diretório no qual diversos \textbf{pacotes} e \textbf{nós} são organizados.
+  \item Para criar um workspace ROS 2, precisamos criar uma pasta.
+  \item Vamos criar um workspace chamado \texttt{ros2\_ws}.
+  \item O workspace permite organizar e compilar múltiplos pacotes de forma isolada e estruturada.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Layout de workspace no ROS 2}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{workspace.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Pastas de um workspace Catkin}
+  \begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{p{0.2\textwidth} p{0.70\textwidth}}
+    \rowcolor{black!5}
+    \textbf{Área} & \textbf{Descrição} \\
+    \hline
+    \rowcolor{white}
+    Source &
+      Contém o código-fonte dos pacotes catkin. Cada subpasta em \texttt{src} corresponde a um ou mais pacotes. \\
+    \rowcolor{black!5}
+    Build &
+      Onde o CMake é invocado para compilar os pacotes do \textit{source space}. CMake e catkin guardam aqui cache e arquivos intermediários. \\
+    \rowcolor{white}
+    Devel &
+      Onde os artefatos compilados ficam disponíveis antes da instalação (ambiente de desenvolvimento). \\
+    \rowcolor{black!5}
+    Install &
+      Após compilar os alvos, eles podem ser instalados aqui executando o \textit{target} de instalação. \\
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Instalação do colcon e Criação do Workspace ROS 2}
+\begin{itemize}
+  \item Antes de criar um workspace, precisamos instalar o \textbf{colcon}.
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ sudo apt install python3-colcon-common-extensions
+\end{lstlisting}
+
+\vspace{0.6em}
+\begin{itemize}
+  \item \textbf{Passos principais:}
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ mkdir -p ~/ros2_ws/src
+$ cd ~/ros2_ws
+\end{lstlisting}
+
+\begin{itemize}
+  \item Clone alguns exemplos no seu src para testarmos
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ git clone https://github.com/ros2/examples src/examples -b humble
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Buildando o workspace}
+
+\begin{itemize}
+  \item Rode o build do workspace:
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ colcon build --symlink-install
+\end{lstlisting}
+
+\begin{itemize}
+  \item Agora rode os testes dos pacotes que buildamos:
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ colcon test
+\end{lstlisting}
+
+\begin{itemize}
+  \item para usar as libs ou executáveis, precisamos adicionar elas ao path:
+\end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ source install/setup.bash
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{Demo}}}
+  \begin{itemize}
+    \item Com o ambiente \textbf{sourced}, rode executáveis construídos com \texttt{colcon}.
+    \item Inicie um \textbf{subscriber} e um \textbf{publisher} de exemplo em terminais separados.
+    \item Você deverá ver mensagens com \textbf{números incrementando}.
+  \end{itemize}
+
+  \vspace{0.5em}
+  \textbf{Terminal 1 — Subscriber:}
+  \begin{lstlisting}[style=bashstyle]
+$ source /opt/ros/humble/setup.bash
+$ ros2 run examples_rclcpp_minimal_subscriber \
+  subscriber_member_function
+  \end{lstlisting}
+
+  \vspace{0.5em}
+  \textbf{Terminal 2 — Publisher:}
+  \begin{lstlisting}[style=bashstyle]
+$ source /opt/ros/humble/setup.bash
+$ ros2 run examples_rclcpp_minimal_publisher \
+  publisher_member_function
+  \end{lstlisting}
+\end{frame}
+
+\section{Pacotes}
+
+\begin{frame}{Estrutura de Pacotes ROS 2}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{packages.png}
+\end{center}
+
+\vspace{0.5em}
+\begin{itemize}
+  \item Cada pacote contém:
+  \begin{itemize}
+    \item \texttt{package.xml} — metadados e dependências.
+    \item \texttt{CMakeLists.txt} — configuração de build.
+    \item \texttt{src/} — código em \texttt{rclcpp} (C++) ou \texttt{rclpy} (Python).
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Arquivos de um pacote ROS}
+  \begin{itemize}
+    \item Layout típico da pasta \texttt{src/package} em um workspace.
+  \end{itemize}
+
+  \vspace{0.4em}
+
+  \begin{center}
+  \begin{tabular}{p{0.28\textwidth} p{0.66\textwidth}}
+    \textbf{Diretório} & \textbf{Explicação} \\
+    \hline
+    \texttt{include/}       & Cabeçalhos (headers) C++ \\
+    \texttt{src/}           & Arquivos-fonte \\
+    \texttt{msg/}           & Pasta com tipos de Mensagem (\texttt{.msg}) \\
+    \texttt{srv/}           & Pasta com tipos de Serviço (\texttt{.srv}) \\
+    \texttt{launch/}        & Pasta com arquivos de \emph{launch} \\
+    \texttt{package.xml}    & Manifesto do pacote \\
+    \texttt{CMakeLists.txt} & Arquivo de build do CMake \\
+  \end{tabular}
+  \end{center}
+
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Arquivos-fonte implementam \textbf{nodes}; podem ser escritos em múltiplas linguagens.
+    \item Nodes são executados individualmente ou em grupos usando \textbf{arquivos de launch}.
+  \end{itemize}
+\end{frame}
+
+% --- Frame 1: Create your own package — Visão geral ---
+\begin{frame}[fragile]{Criação de um Package — Visão geral}
+  \begin{itemize}
+    \item \textbf{colcon} usa o \texttt{package.xml}
+    \item Tipos de build recomendados: \textbf{ament\_cmake} (C++) e \textbf{ament\_python} (Python);
+    \item \texttt{ros2 pkg create} gera pacotes a partir de templates (equivalente ao \texttt{catkin\_create\_package} no catkin).
+  \end{itemize}
+\end{frame}
+
+% --- Frame 2: Setup colcon_cd ---
+\begin{frame}[fragile]{Setup \texttt{colcon\_cd}}
+  \begin{itemize}
+    \item \texttt{colcon\_cd} permite saltar rapidamente para o diretório de um pacote.
+    \item Ex.: \texttt{colcon\_cd algum\_ros\_package} → \texttt{~/ros2\_ws/src/algum\_ros\_package}
+    \item Configure no \texttt{\textasciitilde/.bashrc} (ajuste caminhos conforme sua instalação):
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ echo "source /usr/share/colcon_cd/function/colcon_cd.sh" >> ~/.bashrc
+$ echo "export _colcon_cd_root=/opt/ros/humble/" >> ~/.bashrc
+$ exec bash
+  \end{lstlisting}
+\end{frame}
+
+% --- Frame 3: Setup colcon tab completion ---
+\begin{frame}[fragile]{Setup \texttt{colcon} tab autocompletar}
+  \begin{itemize}
+    \item Instale o pacote de \texttt{argcomplete} e registre no \texttt{~/.bashrc}.
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ sudo apt install -y python3-colcon-argcomplete
+$ echo 'eval "$(register-python-argcomplete3 colcon)"' >> ~/.bashrc
+$ exec bash
+  \end{lstlisting}
+\end{frame}
+
+% --- Frame 5: Setup colcon mixins ---
+\begin{frame}[fragile]{Setup \texttt{colcon} mixins}
+  \begin{itemize}
+    \item \textbf{Mixins} são "atalhos" para opções de linha de comando comuns (ex.: modo Debug).
+    \item Instale e atualize o repositório de mixins padrão:
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ colcon mixin add default \
+  https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
+$ colcon mixin update default
+  \end{lstlisting}
+
+  \vspace{0.4em}
+  \begin{itemize}
+    \item Usar o mixin \texttt{debug} (equivalente a \texttt{--cmake-args -DCMAKE\_BUILD\_TYPE=Debug}):
+  \end{itemize}
+
+  \begin{lstlisting}[style=bashstyle]
+$ colcon build --mixin debug
+  \end{lstlisting}
+\end{frame}
+
+% --- Frame 6: Criar pacote com ros2 pkg create (conveniência) ---
+\begin{frame}[fragile]{Criar pacote com \texttt{ros2 pkg create}}
+  \begin{itemize}
+    \item Gere um \textbf{template} de pacote rapidamente (C++ com \texttt{ament\_cmake} ou Python com \texttt{ament\_python}).
+  \end{itemize}
+
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \textbf{C++ (ament\_cmake):}
+      \begin{lstlisting}[style=bashstyle]
+$ cd ~/ros2_ws/src
+$ ros2 pkg create --build-type ament_cmake \
+  my_cpp_pkg --dependencies rclcpp std_msgs
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Python (ament\_python):}
+      \begin{lstlisting}[style=bashstyle]
+$ cd ~/ros2_ws/src
+$ ros2 pkg create --build-type ament_python \
+  my_py_pkg --dependencies rclpy std_msgs
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+\section{Configurações}
+
+\begin{frame}{Arquivo .bashrc e Alias}
+\begin{itemize}
+  \item Para automatizar configurações:
+\texttt{source /opt/ros/humble/setup.bash}\\
+\texttt{source \textasciitilde{}/ros2\_ws/install/setup.bash}\\
+\texttt{alias cw='cd \textasciitilde{}/ros2\_ws'}\\
+\texttt{alias cs='cd \textasciitilde{}/ros2\_ws/src'}\\
+\texttt{alias cb='cd \textasciitilde{}/ros2\_ws \&\& colcon build'}\\
+\texttt{alias st='source \textasciitilde{}/ros2\_ws/install/setup.bash'}
+\end{itemize}
+\end{frame}
+
+% Disable automatic section TOC for remaining frames
+\AtBeginSection[]{}
+
+\begin{frame}{Referências e Recursos}
+\begin{itemize}
+  \item \url{https://docs.ros.org/en/}
+  \item \url{https://github.com/ros2/examples}
+  \item \url{https://index.ros.org/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\centering
+\Large Dúvidas? \\
+\bigskip
+\small \texttt{andre.marcato@ufjf.br}
+\end{frame}

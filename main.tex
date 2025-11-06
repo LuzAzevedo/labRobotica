@@ -1,0 +1,115 @@
+\PassOptionsToPackage{table}{xcolor}
+
+% Definir aula (será substituído pelo build.sh)
+\def\aulanum{aula1}
+
+\documentclass[11pt]{beamer}
+
+% Pacotes
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage[normalem]{ulem}
+\usepackage{colortbl}
+\usepackage{accsupp}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+
+% Definir comando \nocopy para prompts não copiáveis
+\newcommand{\nocopy}[1]{%
+  \BeginAccSupp{method=escape,ActualText={}}%
+  #1%
+  \EndAccSupp{}%
+}
+
+% Tema
+\usetheme{Boadilla}
+\useinnertheme{circles}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+% Cores
+\definecolor{primaryColor}{RGB}{20,45,105}
+\definecolor{secondaryColor}{RGB}{0,100,160}
+% Cores UFJF (usadas em aula1)
+\definecolor{UFJFWine}{HTML}{7A0026}
+\definecolor{UFJFLightGray}{HTML}{E6E6E6}
+\definecolor{UFJFBlack}{HTML}{000000}
+\setbeamercolor{structure}{fg=primaryColor}
+\setbeamercolor{palette primary}{bg=primaryColor, fg=white}
+\setbeamercolor{palette secondary}{bg=secondaryColor, fg=white}
+\setbeamercolor{title}{bg=primaryColor, fg=white}
+\setbeamercolor{subsection in head/foot}{bg=secondaryColor, fg=white}
+\setbeamercolor{author in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{title in head/foot}{bg=secondaryColor, fg=white}
+\setbeamercolor{date in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{page number in head/foot}{bg=primaryColor, fg=white}
+
+% Estilos de código
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    xleftmargin=10pt,
+    xrightmargin=5pt,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\lstdefinestyle{bashstyle}{
+    language=bash,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen},
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    xleftmargin=10pt,
+    xrightmargin=5pt
+}
+
+
+\lstnewenvironment{bashprompt}{%
+    \lstset{style=bashstyle,escapeinside={||}}%
+}{%
+}
+
+% Configurar paths para imagens e input
+\graphicspath{{\aulanum/images/}}
+\makeatletter
+\def\input@path{{\aulanum/}{\aulanum/sections/}}
+\makeatother
+
+% Section TOC
+\AtBeginSection[]{
+  \begin{frame}{Roteiro}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+% Incluir conteúdo da aula
+\input{\aulanum/\aulanum.tex}
+
+\end{document}
