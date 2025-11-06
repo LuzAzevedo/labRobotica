@@ -1,169 +1,157 @@
-# Slides ROS2 - Sistema de Compilação de Aulas
+# Slides ROS 2 - UFJF
 
-## 🔨 Sistema de Build
+Sistema de slides para aulas de ROS 2 usando LaTeX/Beamer com compilação centralizada.
 
-### Compilação de Aulas LaTeX
-
-Este projeto inclui um sistema simples para compilar qualquer aula (aula1, aula2, aula3, etc.) sem precisar navegar até cada pasta.
-
-#### Método 1: Usando o arquivo de configuração (Recomendado)
-
-1. Edite o arquivo `config.txt` na raiz do projeto:
-   ```
-   AULA=aula2
-   ```
-
-2. Execute o script de build:
-   ```bash
-   ./build.sh
-   ```
-
-#### Método 2: Especificando a aula diretamente
-
-```bash
-./build.sh aula1    # Compila a aula 1
-./build.sh aula2    # Compila a aula 2
-./build.sh aula3    # Compila a aula 3
-```
-
-O PDF será gerado na raiz do projeto como `main.pdf`, independente de qual aula foi compilada.
-
-### Estrutura do Projeto
+## 📋 Estrutura do Projeto
 
 ```
 .
-├── build.sh          # Script principal de compilação
-├── config.txt        # Arquivo de configuração (defina AULA=aulaX)
-├── main.pdf          # PDF gerado na raiz (sempre este nome)
-├── aula1/
-│   └── aula1.tex
-├── aula2/
-│   └── aula2.tex
-└── aula3/
-    └── aula3.tex
+├── main.tex              # Arquivo principal de compilação
+├── aula1/                # Conteúdo da Aula 1
+│   ├── aula1.tex
+│   ├── images/
+│   └── sections/
+├── aula2/                # Conteúdo da Aula 2
+│   ├── aula2.tex
+│   └── images/
+├── aula3/                # Conteúdo da Aula 3
+│   ├── aula3.tex
+│   └── images/
+└── aula4/                # Conteúdo da Aula 4
+    ├── aula4.tex
+    ├── images/
+    └── code_images/
 ```
 
----
+## 🚀 Como Compilar
 
-# Slides ROS2 - Aula 1: Visão Geral + Instalação
+1. **Altere a variável de aula no `main.tex`**:
+   ```latex
+   % Abra main.tex e altere a linha 4:
+   \def\aulanum{aula1}  # Mude para aula1, aula2, aula3 ou aula4
+   ```
 
-## 📋 Conteúdo dos Slides
+2. **Compile o documento**:
 
-Este conjunto de slides cobre a primeira aula do curso de ROS2, incluindo:
+   **Opção A: Usando LaTeX Workshop no VS Code (Recomendado)**
+   - Abra `main.tex` no VS Code
+   - Pressione `Ctrl+Alt+B` (ou use o botão "Build LaTeX project")
+   - O PDF será gerado automaticamente como `main.pdf`
 
-1. **Introdução ao ROS2** - O que é e principais características
-2. **Grafo de Nós** - Conceito fundamental de comunicação distribuída
-3. **DDS (Data Distribution Service)** - Middleware de comunicação
-4. **Diferenças ROS1 vs ROS2** - Principais melhorias
-5. **Escolhas de DDS** - Fast DDS vs CycloneDX
-6. **Instalação ROS2 Humble** - Ubuntu 22.04
-7. **Teste com Turtlesim** - Verificação da instalação
-8. **ROS2 Doctor** - Ferramenta de diagnóstico
-9. **Próximas Aulas** - Visão geral do curso completo
+   **Opção B: Compilação manual via terminal**
+   ```bash
+   pdflatex main.tex
+   pdflatex main.tex  # Repita até resolver todas as referências
+   ```
 
-## 🚀 Como Usar os Slides
+   O PDF será gerado como `main.pdf` na raiz do projeto.
 
-### Opção 1: Slides HTML (Recomendado)
+## 📦 Pré-requisitos e Instalação
+
+### 1. Instalar LaTeX (Ubuntu/Debian)
+
 ```bash
-# Executar o script para criar os slides HTML
-python3 create_slides.py
-
-# Abrir o arquivo HTML no navegador
-firefox ros2_aula1_slides.html
-# ou
-google-chrome ros2_aula1_slides.html
+sudo apt update
+sudo apt install -y texlive-latex-recommended texlive-latex-extra \
+  texlive-fonts-recommended latexmk
 ```
 
-### Opção 2: Manim Slides (Avançado)
+**Pacotes adicionais (se necessário):**
 ```bash
-# Instalar dependências (se necessário)
-pip3 install manim manim-slides
-
-# Executar os slides com Manim
-manim-slides ros2_aula1 ROS2Aula1
-
-# Apresentar os slides
-manim-slides present ros2_aula1 ROS2Aula1
+sudo apt install -y texlive-lang-portuguese texlive-bibtex-extra \
+  texlive-publishers texlive-science
 ```
 
-## 🎮 Controles de Navegação
+### 2. Instalar extensão LaTeX no VS Code
 
-### Slides HTML:
-- **Setas do teclado**: ← → para navegar
-- **Barra de espaço**: Próximo slide
-- **Botões**: Usar os botões na parte inferior
-- **F11**: Modo tela cheia
+1. Abra o VS Code
+2. Vá em **Extensions** (Ctrl+Shift+X)
+3. Procure por **"LaTeX Workshop"** (por James Yu)
+4. Clique em **Install**
 
-### Manim Slides:
-- **Setas**: ← → para navegar
-- **ESC**: Sair da apresentação
-- **F**: Modo tela cheia
+### 3. Configuração do LaTeX Workshop (Opcional)
 
-## 📁 Arquivos Incluídos
+O arquivo `.vscode/settings.json` já está configurado com:
+- Compilação automática usando `latexmk`
+- Suporte a BibTeX
+- Visualização de PDF integrada
 
-- `ros2_aula1.py` - Código fonte dos slides Manim
-- `create_slides.py` - Script para gerar slides HTML
-- `ros2_aula1_slides.html` - Slides HTML prontos para apresentação
-- `README_slides.md` - Instruções básicas
-- `README.md` - Este arquivo com instruções detalhadas
+### 4. Bibliotecas Python (se usar scripts auxiliares)
 
-## 🎯 Objetivos da Aula
+```bash
+pip install -r requirements.txt  # Se houver
+```
 
-Ao final desta aula, os alunos devem:
+## 🛠️ Dependências do Projeto
 
-- [ ] Entender o que é ROS2 e suas principais características
-- [ ] Compreender o conceito de grafo de nós
-- [ ] Saber explicar o papel do DDS na comunicação
-- [ ] Conhecer as principais diferenças entre ROS1 e ROS2
-- [ ] Ser capaz de instalar ROS2 Humble no Ubuntu 22.04
-- [ ] Conseguir executar testes básicos com Turtlesim
-- [ ] Usar ROS2 Doctor para diagnosticar problemas
+### Pacotes LaTeX necessários:
+- `beamer` - Classe para apresentações
+- `listings` - Highlight de código
+- `graphicx` - Inclusão de imagens
+- `hyperref` - Links e referências
+- `tikz` - Desenhos vetoriais
+- `xcolor` - Cores
+- `colortbl` - Tabelas coloridas
+- `accsupp` - Suporte a acessibilidade
+- `ragged2e` - Alinhamento de texto
 
-## 🔧 Requisitos do Sistema
+Todos esses pacotes estão incluídos na instalação recomendada acima.
 
-### Para Slides HTML:
-- Navegador web moderno (Chrome, Firefox, Safari, Edge)
-- Python 3 (para gerar os slides)
+## 📝 Como Adicionar uma Nova Aula
 
-### Para Manim Slides:
-- Python 3.7+
-- Manim e Manim Slides
-- Bibliotecas gráficas (opcional)
+1. Crie a pasta `aula5/` na raiz
+2. Crie `aula5/aula5.tex` com a estrutura:
+   ```latex
+   % ---------- Metadata ----------
+   \title[Aula 5]{Título da Aula 5}
+   \author[Marcato]{Professor: André L. Marcato}
+   \institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+   
+   % ---------- Title ----------
+   \begin{frame}
+     \titlepage
+   \end{frame}
+   
+   % ... conteúdo dos slides ...
+   ```
 
-## 📚 Recursos Adicionais
+3. Crie a pasta `aula5/images/` para as imagens
+4. Altere `\def\aulanum{aula5}` no `main.tex` (linha 4)
+5. Compile o `main.tex` usando LaTeX Workshop ou `pdflatex`
 
-- [Documentação oficial ROS2](https://docs.ros.org/en/humble/)
-- [Tutorial ROS2 Humble](https://docs.ros.org/en/humble/Tutorials.html)
-- [ROS2 Installation Guide](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
+## 🎨 Formatação
 
-## 🎨 Personalização
+O `main.tex` define:
+- Tema Beamer (Boadilla)
+- Cores personalizadas (UFJF)
+- Estilos de código (Python, Bash)
+- Configurações de paths para imagens e includes
 
-Os slides podem ser facilmente personalizados:
+Cada `aulaX.tex` contém apenas:
+- Metadados (título, autor, instituto)
+- Conteúdo dos slides (frames, seções)
 
-1. **Cores**: Modificar as variáveis CSS no arquivo HTML
-2. **Conteúdo**: Editar o texto diretamente no HTML ou no código Python
-3. **Layout**: Ajustar o CSS para diferentes tamanhos de tela
-4. **Animações**: Adicionar transições CSS ou usar Manim para animações avançadas
+## 📄 Output
 
-## 📝 Notas para o Professor
+O PDF gerado (`main.pdf`) fica na raiz do projeto, não dentro das pastas das aulas.
 
-- Os slides incluem comandos práticos que podem ser executados durante a aula
-- Recomenda-se ter uma instalação ROS2 funcionando para demonstrações ao vivo
-- O tempo estimado para esta aula é de 60-90 minutos
-- Incluir exercícios práticos entre os slides para melhor engajamento
+## 🔧 Troubleshooting
 
-## 🐛 Solução de Problemas
+### Erro: "Command not found: pdflatex"
+- Instale o TeX Live: `sudo apt install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk`
 
-### Problemas com Manim:
-- Instalar dependências do sistema: `sudo apt install libpango1.0-dev libpangocairo-1.0-0`
-- Usar versão mais simples: `pip install manim-slides --no-deps`
+### Erro: "Package not found"
+- Instale pacotes específicos adicionais conforme necessário
 
-### Problemas com Slides HTML:
-- Verificar se o navegador suporta JavaScript
-- Usar servidor local se necessário: `python3 -m http.server 8000`
+### Erro: "Reference undefined"
+- Execute múltiplas passagens do pdflatex (o LaTeX Workshop faz isso automaticamente)
 
----
+### Imagens não aparecem
+- Verifique se as imagens estão em `aulaX/images/`
+- Use apenas o nome do arquivo em `\includegraphics`, sem o prefixo `images/`
 
-**Desenvolvido para o curso de ROS2 - 18 aulas**
-**Versão: 1.0 | Data: 2024**
-# labRobotica
+## 📚 Recursos
+
+- [Documentação ROS 2](https://docs.ros.org/)
+- [Beamer User Guide](https://ctan.org/pkg/beamer)
+- [LaTeX Workshop Extension](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
