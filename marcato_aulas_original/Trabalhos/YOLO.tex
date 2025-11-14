@@ -1,0 +1,195 @@
+\section{Introdução}
+
+\begin{frame}{O que é o YOLO?}
+    \begin{itemize}
+        \item YOLO (You Only Look Once) é um algoritmo de \textbf{detecção de objetos em tempo real}.
+        \item Foi proposto por Joseph Redmon em 2016.
+        \item Diferente de abordagens anteriores, o YOLO realiza \textbf{detecção em uma única etapa}, tratando como um problema de regressão.
+        \item Detecta múltiplos objetos e suas classes em uma única imagem de forma eficiente.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Como o YOLO funciona?}
+    \begin{itemize}
+        \item A imagem de entrada é dividida em uma grade (ex: 7x7).
+        \item Cada célula prevê:
+            \begin{itemize}
+                \item Bounding Boxes (caixas delimitadoras)
+                \item Confiança da detecção
+                \item Classes dos objetos
+            \end{itemize}
+            \item Toda a inferência é feita com uma única rede neural convolucional.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Arquitetura do YOLO}
+    \centering
+    \includegraphics[width=0.4\linewidth]{img02/yolo.png}
+    \vspace{0.2cm}
+    
+    {\scriptsize Fonte: Redmon et al.}
+\end{frame}
+    
+\begin{frame}{Evolução do YOLO}
+    \begin{itemize}
+        \item \textbf{YOLOv1 (2016)} – Primeira versão, rápida, mas com baixa precisão para objetos pequenos.
+        \item \textbf{YOLOv2 (YOLO9000)} – Mais acurada e com suporte a múltiplas classes.
+        \item \textbf{YOLOv3, v4, v5...} – Melhorias progressivas em velocidade e precisão.
+        \item \textbf{YOLOv8 (Ultralytics)} – Implementação moderna com suporte a PyTorch e ONNX.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Aplicações do YOLO}
+    \begin{itemize}
+        \item Carros autônomos
+        \item Câmeras de vigilância
+        \item Drones
+        \item Robôs móveis (como os da disciplina!)
+        \item Contagem de objetos e rastreamento em tempo real
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplo de Detecção com YOLO}
+    \centering
+    \includegraphics[width=0.9\linewidth]{img02/detecao.png} \\~
+    \vspace{0.2cm}
+    {\scriptsize Imagem ilustrativa com caixas delimitadoras (bounding boxes)}
+    \end{frame}
+
+\begin{frame}{Vantagens e Limitações}
+    \begin{columns}
+        \column{0.5\textwidth}
+            \textbf{Vantagens:}
+            \begin{itemize}
+                \item Muito rápido (tempo real)
+                \item Rede única e simples de implementar
+                \item Detecção multiobjeto eficiente
+            \end{itemize}
+            
+        \column{0.5\textwidth}
+            \textbf{Limitações:}
+            \begin{itemize}
+                \item Menor precisão para objetos pequenos
+                \item Trade-off entre velocidade e acurácia
+                \item Versões antigas não suportam bem múltiplas escalas
+            \end{itemize}
+            \end{columns}
+    \end{frame}
+
+
+\begin{frame}{Exemplo Prático com YOLO}
+    \textbf{Objetivo:} Criar e treinar um modelo YOLO com suas próprias imagens.
+    
+    \begin{enumerate}
+        \item Capturar ou coletar imagens (ex: celular, Google Images)
+        \item Anotar os objetos com \textbf{LabelImg}
+        \item Treinar o modelo YOLO com Ultralytics
+        \item Testar com novas imagens
+    \end{enumerate}
+    
+    {\small É possível usar Google Colab para evitar instalação local.}
+\end{frame}
+
+\section{Etiquetagem}
+
+\begin{frame}{Ferramenta de Etiquetagem: LabelImg}
+    \begin{itemize}
+        \item Programa gratuito para anotar objetos manualmente em imagens.
+        \item Gere arquivos `.xml` (formato PASCAL VOC) com os \textbf{bounding boxes}.
+        \item Cada imagem `.png` ou `.jpg` terá um `.xml` com as coordenadas dos objetos.
+    \end{itemize}
+    
+    \begin{center}
+        \includegraphics[width=0.4\linewidth]{img02/labelimg_exemplo.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Instalação do LabelImg}
+    \textbf{No terminal (Linux, macOS ou Windows com WSL):}
+
+    \begin{lstlisting}
+    git clone https://github.com/tzutalin/labelImg.git
+    cd labelImg
+    pip install pyqt5 lxml
+    python labelImg.py
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    \textbf{Após abrir:}
+    \begin{itemize}
+        \item Escolha a pasta com as imagens.
+        \item Clique em "Create RectBox" e salve os arquivos `.xml`.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Estrutura de Diretório para Treinamento}
+    Organize assim:
+    \begin{lstlisting}
+    /dataset
+      ├── images
+      │   ├── image1.png
+      │   ├── image2.png
+      └── labels
+          ├── image1.xml
+          ├── image2.xml
+    \end{lstlisting}
+    
+    Você pode converter para YOLO format com o Roboflow ou `xml\_to\_yolo.py`.
+\end{frame}
+
+\section{Treinamento}
+\begin{frame}[fragile]{Treinando com YOLOv8 no Google Colab}
+    Instale a biblioteca Ultralytics:
+    
+    \begin{lstlisting}
+    !pip install ultralytics
+    \end{lstlisting}
+
+    Treine o modelo com seus dados:
+    \begin{lstlisting}
+    from ultralytics import YOLO
+    
+    model = YOLO('yolov8n.pt')  # Modelo base
+    model.train(data='data.yaml', epochs=50)
+    \end{lstlisting}
+    
+    Você deve criar um `data.yaml` descrevendo:
+    \begin{itemize}
+        \item Caminhos para imagens de treino/teste
+        \item Lista de classes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo de Arquivo data.yaml}
+    \begin{lstlisting}
+    path: /content/dataset
+    train: images/train
+    val: images/val
+    
+    names:
+      0: carro
+      1: pessoa
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item Use Roboflow para criar isso automaticamente
+        \item Ou escreva manualmente com base na sua estrutura
+    \end{itemize}
+    \end{frame}
+
+\section{Teste}
+\begin{frame}[fragile]{Testando seu modelo}
+    Depois de treinado:
+    \begin{lstlisting}
+    results = model('caminho/para/imagem.jpg')
+    results.show()
+    \end{lstlisting}
+    
+    Você pode salvar a imagem com as detecções:
+    \begin{lstlisting}
+    results.save(filename='saida.jpg')
+    \end{lstlisting}
+    
+    Também é possível rodar em tempo real com webcam!
+\end{frame}
+

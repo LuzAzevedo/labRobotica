@@ -1,0 +1,350 @@
+\section{Bibliografia}
+
+
+\begin{frame}
+	\frametitle{Livros Texto}
+	\only<1>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/corke.jpg}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/RobotProgramming.png}
+			\end{column} 
+		\end{columns}
+	}
+	\only<2>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/thrun.png}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/LaValle.png}
+			\end{column} 
+		\end{columns}
+	}
+
+        \only<3>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/ROS_Springer.jpg}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/Learning.jpg}
+			\end{column} 
+		\end{columns}
+	}	
+
+        \only<4>
+	{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/LivroPython1.png}
+			\end{column} 
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.5cm, height=6cm]{Figuras/LivroPython2.png}
+			\end{column} 
+		\end{columns}
+	}	
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{ROS Website (\href{www.ros.org}{www.ros.org})} 
+	\only<1>
+	{
+		\includegraphics[width=9cm, height=6cm]{Figuras/ROS_Website.png} 
+	}
+	\only<2>
+	{
+		\includegraphics[width=9cm, height=6cm]{Figuras/ROS_Website_2.png} 
+	}
+\end{frame}
+
+
+\section{Hot Areas}
+
+\begin{frame}
+	\frametitle{Hot Areas}
+	\only<1>
+	{
+		\centering
+		\huge{Carros Autônomos} \\~\\
+		\includegraphics[width=8cm, height=5.5cm]{Figuras/self_driving.jpg}
+	}
+	\only<2>
+	{
+		\centering
+		\huge{Drones} \\~\\
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\includegraphics[width=4cm, height=2.7cm]{Figuras/drone.jpg}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\includegraphics[width=4cm, height=2.7cm]{Figuras/drone_city.jpg}
+			\end{column}
+		\end{columns}
+	}
+	\only<3>
+	{
+		\centering
+		\huge{Robôs de Serviço} \\~\\
+		\includegraphics[width=8cm, height=5.5cm]{Figuras/service_robots.jpg}
+	}
+	\only<4>
+	{
+		\centering
+		\huge{Robôs Industriais} \\~\\
+		\includegraphics[width=8cm, height=5.5cm]{Figuras/industrial.jpg}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ciclo de um Processo em Robótica} 
+	\centering
+
+	\begin{tikzpicture}
+						[squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size = 10mm},]
+		\only<1-3>
+		{
+			\node[squarednode] 									(sense)	{Sensores};
+		}
+		\only<2-3>
+		{	
+			\node[squarednode, right of=sense,xshift=2.4cm] 	(think) {Processamento};
+		}
+		\only<3->
+		{	
+			\node[squarednode, right of=think,xshift=2.4cm] 	(act)	{Atuação};
+		}
+		\only<1-3>
+		{
+			\node[inner sep=0pt, above of=sense, yshift=1cm] 	(fig_sense) 
+			{
+				\includegraphics[width=.25\textwidth]{Figuras/vision.jpg}
+			};
+		}
+		\only<2-3>
+		{		
+			\node[inner sep=0pt, above of=think, yshift=1cm] 	(fig_think) 
+			{
+				\includegraphics[width=.25\textwidth]{Figuras/brain.jpg}
+			};
+		}
+		\only<3->
+		{		
+			\node[inner sep=0pt, above of=act, yshift=1cm] 		(fig_act) 
+			{
+				\includegraphics[width=.25\textwidth]{Figuras/act.png}
+			};
+		}			
+		\only<2-3>
+		{	
+			\draw[->, thick, draw=red!60] (sense.east) -- (think.west) ;
+		}
+		\only<3->
+		{
+			\draw[->, thick, draw=red!60] (think.east) -- (act.west) ;
+		}
+	\end{tikzpicture}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Exemplo}
+		\centering
+		\includegraphics[width=10cm, height=6cm]{Figuras/example_car.jpg}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sensores}
+	\centering
+	\begin{tikzpicture}
+	[vermelho/.style={rectangle, draw=red!60, 	fill=red!5, 	very thick, minimum size = 10mm},
+	verde/.style	={rectangle, draw=green!60, fill=green!5, 	very thick, minimum size = 10mm},]
+	
+	\node[vermelho] 								(sense)		{Sensores};
+	\node[verde, right of=sense	 	,xshift=2.4cm] 	(ultrassom) {Ultrassom};
+	\node[verde, above of=ultrassom	,yshift=1cm] 	(lasers)	{Laser Scan};
+	\node[verde, above of=lasers	,yshift=1cm] 	(camera)	{Câmera};
+	\node[verde, below of=ultrassom	,yshift=-1cm] 	(GPS)		{GPS};	
+	\node[inner sep=0pt, above of=sense, yshift=1cm] 	(fig_sense) 
+	{
+		\includegraphics[width=.25\textwidth]{Figuras/vision.jpg}
+	};
+
+	\node[inner sep=0pt, right of=camera, xshift=2.4cm] 	(fig_camera) 
+	{
+		\includegraphics[width=.25\textwidth]{Figuras/camera.jpg}
+	};
+
+	\node[inner sep=0pt, right of=lasers, xshift=2.4cm] 	(fig_lasers) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/lidar.jpg}
+	};
+
+	\node[inner sep=0pt, right of=ultrassom, xshift=2.4cm] 	(fig_ultrassom) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/ultrassonic.jpg}
+	};
+	
+	\node[inner sep=0pt, right of=GPS, xshift=2.4cm] 	(fig_gps) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/gps.jpg}
+	};
+	
+	\end{tikzpicture}
+\end{frame}
+%------------------------------------------------
+
+
+\begin{frame}
+	\frametitle{Processamento}
+	\centering
+	\begin{tikzpicture}
+	[vermelho/.style={rectangle, draw=red!60, 	fill=red!5, 	very thick, minimum size = 10mm},
+	verde/.style	={rectangle, draw=green!60, fill=green!5, 	very thick, minimum size = 10mm},]
+	
+	\node[vermelho] 								(think)		{Processamento};
+	\node[verde, right of=think	 	,xshift=2.9cm] 	(obi) 		{Otimização Bioinspirada};
+	\node[verde, above of=obi		,yshift=1cm] 	(mdl)		{Machine/Deep Learning};
+	\node[verde, above of=mdl		,yshift=1cm] 	(ai)		{Inteligência Artificial};
+	\node[verde, below of=obi		,yshift=-1cm] 	(signal)	{Processamento de Sinais};	
+	\node[inner sep=0pt, above of=think, yshift=1cm] (fig_think) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/brain.jpg}
+	};
+	
+	\node[inner sep=0pt, right of=ai, xshift=2.4cm] 	(fig_ai) 
+	{
+		\includegraphics[width=.25\textwidth]{Figuras/ai.png}
+	};
+	
+	\node[inner sep=0pt, right of=mdl, xshift=2.4cm] 	(fig_mdl) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/machinelearning.png}
+	};
+	
+	\node[inner sep=0pt, right of=signal, xshift=2.4cm] (fig_signal) 
+	{
+		\includegraphics[width=.20\textwidth]{Figuras/processamentosinais.png}
+	};
+	
+	\node[inner sep=0pt, right of=obi, xshift=2.4cm] 	(fig_obi) 
+	{
+		\includegraphics[width=.15\textwidth]{Figuras/gohb.png}
+	};
+	
+	\end{tikzpicture}
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}
+	\frametitle{Processamento}
+	\only<1>
+	{
+		\begin{itemize}
+			\item Visual Odometry / SLAM / Outros algoritmos de visão
+			\item Filtro de Partículas
+			\item Algoritmos de Localização
+			\item Planejamento de Caminhos e Trajetórias
+			\item Controle (PID, Realimentação de estados)
+			\item Filtro de Kalman
+		\end{itemize}
+	}
+	\only<2>
+	{
+		\centering
+		\includegraphics[width=8cm, height=5.5cm]{Figuras/lista.jpg}		
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Atuadores}
+	\centering
+	\begin{tikzpicture}
+		[vermelho/.style={rectangle, draw=red!60, 	fill=red!5, 	very thick, minimum size = 10mm},
+		verde/.style	={rectangle, draw=green!60, fill=green!5, 	very thick, minimum size = 10mm},]
+	
+		\node[vermelho] 							(act)		{Atuadores};
+		\node[verde, right of=act ,xshift=2.9cm] 	(uav) 		{Motores de UAV (Drones)};
+		\node[verde, above of=uav ,yshift=1cm] 		(ser)		{Servo Motores};
+		\node[verde, above of=ser ,yshift=1cm] 		(auv)		{Motores Aquáticos (AUV)};
+		\node[verde, below of=uav ,yshift=-1cm] 	(gas)		{Motores Combustão};	
+		\node[inner sep=0pt, above of=think, yshift=1cm] (fig_act) 
+		{
+			\includegraphics[width=.25\textwidth]{Figuras/act.png}
+		};
+	
+		\node[inner sep=0pt, right of=uav, xshift=2.7cm] 	(fig_uav) 
+		{
+			\includegraphics[width=.15\textwidth]{Figuras/uav.jpg}
+		};
+	
+		\node[inner sep=0pt, right of=ser, xshift=2.7cm] 	(fig_ser) 
+		{
+			\includegraphics[width=.15\textwidth]{Figuras/servo.jpg}
+		};
+	
+		\node[inner sep=0pt, right of=auv, xshift=2.7cm] 	(fig_auv) 
+		{
+			\includegraphics[width=.15\textwidth]{Figuras/auv.jpg}
+		};
+	
+		\node[inner sep=0pt, right of=gas, xshift=2.7cm] 	(fig_gas) 
+		{
+			\includegraphics[width=.15\textwidth]{Figuras/gas.jpg}
+		};
+	
+	\end{tikzpicture}	
+\end{frame}
+
+\section{Robotic Operating System - ROS}
+\begin{frame}
+	\frametitle{Motivação para o ROS}
+	\begin{columns}
+		\only<1-2>
+		{
+			\begin{column}{0.5\textwidth}
+				\centering
+				\includegraphics[width=4.3cm, height=6.5cm]{Figuras/Re-Inventing.png}
+			\end{column}
+		}
+		\only<2->
+		{
+			\begin{column}{0.5\textwidth}
+				\href{https://spectrum.ieee.org/automaton/robotics/robotics-software/the-origin-story-of-ros-the-linux-of-robotics}{The Origin Story of ROS, the Linux of Robotics} \\~\\
+				\scriptsize
+				"The world's most influential robotics software platform"
+			\end{column}
+		}	
+	\end{columns}
+	
+\end{frame}
+
+\begin{frame}{Python vs C/C++}
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \centering
+            \includegraphics[width=6.3cm, height=6.5cm]{Figuras/Python_vs_c.png}            
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            \begin{itemize}
+                \item \textbf{Python}: mais simples, produtividade elevada.
+                \item \textbf{C/C++}: mais rápido, ideal para sistemas embarcados e desenvolvimento de baixo nível.
+            \end{itemize}            
+        \end{column}
+    \end{columns}
+\end{frame}
+

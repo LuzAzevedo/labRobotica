@@ -1,0 +1,115 @@
+\section{Robôs com Pernas}
+
+\begin{frame}
+    \frametitle{Robôs com Pernas}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{cc}
+                \includegraphics[width=0.45\textwidth]{img04/pernas_1.jpg} &
+                \includegraphics[width=0.45\textwidth]{img04/pernas_2.png} \\
+            \end{tabular}    
+            
+            \includegraphics[width=0.65\textwidth]{img04/pernas_3.png} 
+            
+            \begin{mdframed}[%
+                            backgroundcolor=blue!20,   % cor de fundo
+                            linecolor=red,               % cor da borda
+                            linewidth=1pt,               % espessura da borda
+                            roundcorner=4pt,             % cantos arredondados
+                            innertopmargin=6pt,          % espaço interno acima
+                            innerbottommargin=6pt,       % espaço interno abaixo
+                            innerleftmargin=6pt,         % espaço interno à esquerda
+                            innerrightmargin=6pt         % espaço interno à direita
+                            ]
+                \scriptsize
+                Quanto menor o número de pernas, mais difícil é o controle da estabilidade do robô para que este se mantenha de pé.
+            \end{mdframed}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item A locomoção por pernas é caracterizada por uma série de pontos de contato articulados entre o robô e o ambiente.
+                \item Pernas são, de fato, manipuladores robóticos e possuem diversos fatores a serem modelados e controlados.
+                \item O fato é que robôs com pernas podem possuir diversas configurações diferentes, variando não somente na disposição e construção das pernas, mas também na sua quantidade
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Estabilidade Estática}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.55\textwidth]{img04/estatica_1.png} \\
+                \includegraphics[width=0.55\textwidth]{img04/estatica_2.png} \\
+            \end{tabular}                
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \only<1>
+            {
+                \begin{itemize}
+                    \item a \textbf{estabilidade estática} – capacidade do robô manter-se de pé enquanto parado – \textbf{é cada vez mais difícil conforme o número de pernas decresce}.
+                    \item Ou seja, a projeção do \textbf{Centro de Gravidade (CoG)} do robô deve estar dentro da figura geométrica formada pelos seus pontos de contato com o solo (zona de estabilidade estática).
+                \end{itemize}
+            }
+            \only<2>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item Além estabilidade estática, também é necessário garantir a \textbf{estabilidade dinâmica}, ou seja, durante o movimento.
+                    \item Nesse caso, são permitidos menos que três pontos de contato com o solo, e boa parte da estabilidade do robô estará auxiliada pelo \textbf{momento angular}, logo, quanto mais rápido o robô se mover, melhor para a estabilidade dinâmica.
+                    \item No entanto, para garanti-la, é preciso desenvolver uma gama de ações de controle para manter o \textbf{CoG} na região de contato.
+                \end{itemize}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Perna é Igual a um Manipulador Robótico}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item Requer-se um mínimo de dois DoFs para mover uma perna. Um para o movimento de levantamento (lift) da perna e o outro para o movimento de balanço (swing) da perna, para frente ou para trás.
+                    \item Na maior parte dos exemplos, pernas possuem três DoFs:
+                \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{img04/manipulador.png}   
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Robôs com Pernas Código Aberto}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img04/robos_pernas_open_source.png}   
+\end{frame}
+
+\begin{frame}
+    \frametitle{Robôs com Pernas Código Aberto}
+    \begin{itemize}
+        \scriptsize
+        \item Stanford Pupper. \href{https://youtu.be/NIjodHA78UE?si=Aq9xUQhnpfVq5O4z}{\color{blue}{\underline{Link}}}.
+        \item Solo 8 ou Solo 12. \href{https://youtu.be/MkXU-5Oupg4?si=1Vtvc7LNVfHw8Rju}{\color{blue}{\underline{Link}}}.  
+        \item Vision Free Cheeta. \href{https://youtu.be/QZ1DaQgg3lE?si=e7FNd9USRKVdUAMg}{\color{blue}{\underline{Link}}}.
+    \end{itemize}        
+\end{frame}
+
+\begin{frame}
+    \frametitle{Movimentos de caminhada (esquerda) e galope (direita) com quatro pernas}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img04/caminhada_e_galope.png}   
+\end{frame}
+
+\begin{frame}
+    \frametitle{Movimentos mais comuns em robôs com 6 pernas para manter a estabilidade estática enquanto se movimenta}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img04/six_legs.png}   
+\end{frame}
+

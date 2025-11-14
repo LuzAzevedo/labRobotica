@@ -1,0 +1,186 @@
+\section{Vision}
+
+\begin{frame}
+	\frametitle{Quase todos animais possuem olhos}
+	\only<1>
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=6cm, height=6cm]{Figuras/inseto.png}
+			\caption{Olhos compostos (Insetos)}
+		\end{figure}
+	}
+	\only<2>
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=6cm, height=6cm]{Figuras/aranha.png}
+			\caption{Olhos principais e secundários (aranha)}
+		\end{figure}
+	}
+	\only<3>	
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=6cm, height=6cm]{Figuras/olhos-azuis.jpg}
+			\caption{Olhos baseados em lente (seres humanos)}
+		\end{figure}
+	}	
+	\only<4>	
+	{
+		\begin{itemize}
+		\item Explora ambientes desconhecidos
+		\item Negocia espaço físico com os outros
+		\item Detecta e reconhece a presa à distância, para então caça-la
+		\item E assim por diante...
+		\end{itemize}
+	}		
+\end{frame}
+
+\begin{frame}
+	\begin{beamerboxesrounded}{}
+		\centering
+		\begin{LARGE}
+			"A picture is worth a thounsand words"
+		\end{LARGE}
+	\end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Por que é tão difícil fazer um computador enxergar?}
+	\only<1>
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=6cm, height=6cm]{Figuras/camera.jpg}
+			\caption{USB 2.0 board-level camera - mvBlueFOX-MLC - Global Shutter - 90 fps}
+		\end{figure}	
+	}
+	\only<2>
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=8cm, height=6cm]{Figuras/backhand2-sharapova.jpg}
+			\caption{Backhand tenista Sharapova}
+		\end{figure}	
+	}
+	\only<3>
+	{
+		\begin{itemize}
+		\item Uma câmera pode entregar para o computador muitos \emph{frames} por segundo, tal como a retina do olho entrega para o cérebro humano
+		\item No entanto, cada \emph{frame} é uma coleção de números positivos que mede a quantidade de luz incidente sobre uma localização em particular (\emph{pixel}) sobre uma superfície foto-sensível.
+		\item Geralmente são utilizadas duas formas de representação:
+			\begin{itemize}
+				\item Canal simples: Escala de Cinza
+				\item Colorido (RGB)
+			\end{itemize}
+		\item Diferentes resoluções
+			\begin{itemize}
+				\item Exemplo: 1000 x 750 (Largura x Altura)
+			\end{itemize}
+		\end{itemize}	
+	}
+	\only<4>
+	{
+		\begin{block}{Gradiente de Imagem mostrando os valores do pixel desde o preto (0) até o branco (255)}
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=10cm, height=2cm]{Figuras/EscalaCinza.png}
+			\end{figure}	
+		\end{block}
+	}	
+	\only<5>
+	{
+		\begin{block}{O Espaço de Cores RGB é aditivo}
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=5cm, height=3cm]{Figuras/RGB_1.png} \\~\\
+				\includegraphics[width=8cm, height=3cm]{Figuras/RGB_2.png}				
+			\end{figure}	
+		\end{block}
+	}	
+	
+	\only<6>
+	{
+		\begin{block}{Cada pixel tem três números representando o \emph{red, green e blue} respectivamente}
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=9cm, height=6cm]{Figuras/lenna.png}
+			\end{figure}	
+		\end{block}
+	}
+	\only<7>
+	{
+		\begin{block}{Para um computador, o espelho lateral de um carro é somente um matriz com números positivos}
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=9cm, height=6cm]{Figuras/darpa.png}
+			\end{figure}	
+		\end{block}
+	}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Como interpretar os valores dos pixels?}
+	\only<1>
+	{
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=10cm, height=8cm]{Figuras/identificacao_imagem.png}
+			\end{figure}	
+	}	
+	\only<2>
+	{
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=6cm, height=3cm]{Figuras/apple_red.png}
+			\end{figure}	
+	}	
+	\only<3>
+	{
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=6cm, height=3cm]{Figuras/apple_green.png}
+			\end{figure}	
+	}	
+	\only<4>
+	{
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=8cm, height=8cm]{Figuras/pontodevista.jpg}
+			\end{figure}	
+	}	
+	\only<5>
+	{
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=8cm, height=7.5cm]{Figuras/background.png}
+			\end{figure}	
+	}
+	\only<6>
+	{
+		\begin{figure}[!htb]
+			\centering
+			\includegraphics[width=6cm, height=8cm]{Figuras/Challenges.png}
+		\end{figure}	
+	}
+	\only<7>
+	{
+		\begin{itemize}
+		\item O mesmo objeto de interesse pode estar mais próximo ou mais distante
+		\item O mesmo objeto pode ser capturado de um ângulo diferente
+		\item As condições de iluminação ambiente mudam completamente os valores dos pixels
+		\item Entre outros desafios
+		\end{itemize}
+	}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{YOLO - You Only Look Once}
+    \centering
+    \includegraphics[width=8cm, height=4cm]{Figuras/yolo.png}
+\end{frame}
+
+	

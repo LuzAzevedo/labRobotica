@@ -1,0 +1,233 @@
+\section{Sonares e Lidares}
+\begin{frame}
+    \frametitle{Sonares}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \only<1-2>
+            {
+                \begin{tabular}{c}
+                    \includegraphics[width=0.8\textwidth]{img05/ecolocalização.png} \\
+                    \includegraphics[width=0.8\textwidth]{img05/ecolocalização_2.png} \\
+                \end{tabular}
+            }
+            \only<3>
+            {
+                \begin{tabular}{c}
+                    \includegraphics[width=0.8\textwidth]{img05/sonar.png} \\
+                \end{tabular}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \only<1>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item O termo SONAR é um acrônimo para \textbf{So}und \textbf{Navigation} and \textbf{R}anging, que, em tradução livre, significa Determinação de Distâncias pela Navegação do Som.
+                    \item Dessa maneira, SONARES são dispositivos que medem distâncias (\textbf{rangefinder}) a objetos com base nos princípios sonoros.
+                    \item Na natureza, os morcegos e golfinhos se valem dos princípios sonoros para se locomoverem e caçarem. São capazes de montar mapas tridimensionais dos seus arredores.
+                \end{itemize}
+            }
+            \only<2>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item Por meio de distâncias é possível obter informações acerca do ambiente no qual o sensor está imerso.
+                    \item Assim, o sonar é um sensor \textbf{exteroceptivo} e ativo, uma vez que envia energia (sonora) para o ambiente.
+                    \item Por meio de distâncias é possível obter informações acerca do ambiente no qual o sensor está imerso.
+                    Assim, o sonar é um sensor \textbf{exteroceptivo} e ativo, uma vez que envia energia (sonora) para o ambiente.
+                \end{itemize}
+            }
+            \only<3>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item Sonares são compostos por dois dispositivos:
+                    \begin{itemize}
+                        \scriptsize
+                        \item Um emissor (emitter) sonoro (piezelétrico).
+                        \item Um receptor (receiver) sonoro (piezelétrico).
+                    \end{itemize}
+                    \item Sonares, por si só, são elementos mecatrônicos completos: possuem transdutores, microcontroladores para a contagem de tempo e cálculo das distâncias, fazem o condicionamento dos sinais envolvidos, e assim por diante. 
+                \end{itemize}
+            }
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sonares}
+    \centering
+    \includegraphics[width=0.95\textwidth]{img05/sonar_2.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sonares}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.8\textwidth]{img05/sonar_3.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item O espalhamento típico da onda sonora é dado abaixo:
+                \item Nota-se que, além do cone energético central (principal, 0o), há energia sendo emitida em outras direções radiais (ângulos).
+                \item Essa energia radial pode interferir com as medidas realizadas pelos sonares (obstáculos nessas regiões podem ser obtidos).
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sonares}
+    \begin{itemize}
+        \item O sonar funciona bem quando os obstáculos encontram-se perpendicularmente ao cone principal emitido.
+        \item Caso contrário, reflexões especulares atrapalharão as medidas
+    \end{itemize} 
+    \centering
+    \includegraphics[width=0.95\textwidth]{img05/sonar_4.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sonares: Exemplo UHE Santo Antônio (YOLO)}
+    \centering
+    \begin{tabular}{c c}
+        \includegraphics[width=0.45\textwidth]{img05/SAE_1.jpg} &
+        \only<2>
+        {
+            \includegraphics[width=0.45\textwidth]{img05/SAE_2.jpg}         
+        }
+        \\
+        \end{tabular}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sonares: Exemplo UHE Santo Antônio (YOLO)}
+    \centering
+    \begin{tabular}{c c}
+        \includegraphics[width=0.45\textwidth]{img05/SAE_3.jpg} &
+        \only<2>
+        {
+            \includegraphics[width=0.45\textwidth]{img05/SAE_4.jpg}         
+        }
+        \\
+        \end{tabular}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Lidares}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \only<1-2>
+            {
+                \begin{tabular}{c}
+                    \includegraphics[width=0.4\textwidth]{img05/sick.png} \\
+                    \includegraphics[width=0.4\textwidth]{img05/hokuyo.png} \\
+                \end{tabular}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \only<1>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item O LIDAR (\textbf{LI}ght \textbf{D}etection \textbf{A}nd \textbf{R}anging), ou laser, também mede distâncias (rangefinders) a objetos.
+                    \item No caso do lidar, o princípio é similar ao do sonar, envolvendo reflexão de ondas, mas, desta vez não com som, e sim com luz monocromática.
+                    \item Uma luz de \textbf{LASER} (\textbf{L}ight \textbf{A}mplification by \textbf{S}timulated \textbf{E}mission of \textbf{R}adiation) é a chamada luz colimada, ou seja, os raios de luz viajam todos praticamente paralelos.
+                    \item Caso contrário, reflexões especulares atrapalharão as medidas.
+                \end{itemize}
+            }
+            \only<2>
+            {
+                \begin{itemize}
+                    \scriptsize
+                    \item No caso, os raios possuem um comprimento de onda muito bem definido (ou seja, a luz possui uma única cor, monocromática).
+                    \item A princípio, o mesmo conceito de “tempo de vôo” utilizado para o sonar também poderia ser utilizado para o laser, uma vez que a velocidade da luz é bem conhecida (299.792.458 m/s).
+                \end{itemize}
+            }
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lidares}
+    \centering
+    \includegraphics[width=0.95\textwidth]{img05/lidar.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lidares}
+    \centering
+    \begin{itemize}
+        \scriptsize
+        \item A distância pode ser calculada com a seguinte expressão:
+    \end{itemize}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{equation*}
+                d = \frac{\lambda \theta}{2 \pi}
+            \end{equation*}  
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{equation*}
+                \begin{array}{c}
+                2\pi \rightarrow \lambda \\
+                d \rightarrow \theta
+                \end{array}            
+            \end{equation*}
+        \end{column}
+    \end{columns}
+        
+    \begin{itemize}
+        \scriptsize
+        \item[] Em que: 
+            \begin{itemize} 
+                \scriptsize
+                \item $\lambda$ é o comprimento de onda da luz emitida.
+                \item $\theta$ é a diferença de fase entre as luzes emitida e recebida.
+            \end{itemize}
+        \item Conforme percebe-se, a distância detectada pela diferença de fase (d) corresponde ao dobro da distância entre o sensor e o obstáculo (mesmo problema do tempo de voo do sonar).
+        \item Dessa forma, a distância D entre o sensor e o obstáculo é:
+    \end{itemize}
+
+    \begin{equation}
+        D = \frac{d}{2} = \frac{\lambda \theta}{4\pi}
+    \end{equation}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Lidares}
+    \begin{itemize}
+        \scriptsize
+        \item Como pode-se perceber, a onda eletromagnética é periódica.
+        \item Por conta disso, a distância máxima (d) que pode medir é de, justamente, seu comprimento de onda $\lambda$.
+        \begin{itemize}
+            \scriptsize
+            \item Exemplo: se $\lambda$=60 metros então, qualquer distância acima de 60 metros é ambígua e pode ser confundida com uma distância menor. Por exemplo, um objeto a 65 metros produz a mesma diferença de fase Ɵ que um outro objeto a 5 metros. Dessa forma, o sensor retornaria a distância errada.
+        \end{itemize}
+        \item No entanto, conforme visto, a distância D entre o sensor e o obstáculo é, na verdade, a metade da distância d.
+        \item Portanto, o alcance máximo de um sensor de laser é a metade de seu comprimento de onda.
+       \begin{itemize}
+            \scriptsize
+            \item Exemplo: se $\lambda$=60 metros então, Dmax=30 metros.
+        \end{itemize}
+        \item Alternativas:
+        \begin{itemize}
+            \scriptsize
+            \item Modulação com múltiplas frequências (multitone ou multifrequência)
+            \item LiDARs baseados em tempo de voo (Time-of-Flight – ToF direto)
+            \item LiDARs de pulso (pulsed LiDAR)
+            \item Técnicas híbridas e DSP avançado
+        \end{itemize}
+    \end{itemize}
+\end{frame}

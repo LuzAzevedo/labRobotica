@@ -1,0 +1,141 @@
+\section{Introdução}
+
+\begin{frame}
+    \frametitle{Sensores}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.65\textwidth]{img05/sensores_carro_1.png} \\
+                \includegraphics[width=0.65\textwidth]{img05/sensores_carro_2.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Uma das tarefas mais importantes para um sistema robótico autônomo é extrair conhecimento do seu ambiente.
+                \item As informações necessárias são obtidas por sensores.
+                \item Os sensores são o elemento chave para a percepção das informações internas do robô e do ambiente.
+                \item A compreensão do funcionamento físico adotado nos sensores propicia o emprego correto para uma determinada aplicação.
+            \end{itemize}
+        \end{column}        
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensores x Transdutor}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.65\textwidth]{img05/transdutor.png} \\
+                \includegraphics[width=0.65\textwidth]{img05/balança.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Um \textbf{sensor} é um dispositivo que responde a um estímulo físico ou químico de maneira específica e mensurável.
+                \item \textbf{Transdutor} é um dispositivo que transforma um tipo de energia em outra, utilizando para isso um elemento sensor. Ex.: energia mecânica em energia elétrica
+                \item As informações necessárias para análise, planejamento, controle são obtidas por sensores e transdutores.
+                \item Um sensor é uma sub-categoria de transdutor. Exemplo: Auto-falante é um transdutor (mas não é um sensor).
+            \end{itemize}
+        \end{column}        
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensores}
+    \begin{itemize}
+        \item \textbf{Há dois tipos de sensores:}
+        \begin{itemize}
+            \item \underline{Sensores Proprioceptivos}: são os sensores empregados para medir as informações internas do robô.
+            \begin{itemize}
+                \scriptsize
+                \item Velocidade do motor.
+                \item Carga nas rodas.
+                \item Direcionamento do robô.
+                \item Status da bateria, etc.
+            \end{itemize}
+            \item \underline{Sensores Exterioceptivos}: empregados para medir informações do ambiente. Também chamados externoceptivos.
+            \begin{itemize}
+                \scriptsize
+                \item Distância dos objetos.
+                \item Intensidade de luz do ambiente.
+                \item Características especiais/únicas do ambiente, etc.
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensores}
+    \begin{itemize}
+        \scriptsize
+        \item \textbf{\underline{Sensores Passivos}}: os sensores passivos apenas medem a energia que está sendo recebida diretamente do ambiente. Não há possibilidades do sensor interferir/influenciar no presente estado do ambiente. Geralmente possuem resposta menos eficiente, pois a energia do ambiente pode variar, influenciando sua resposta.
+        \begin{itemize}
+            \scriptsize
+            \item Exemplo: câmera sem flash, termômetro, sensor de umidade.
+        \end{itemize}
+        \item \textbf{\underline{Sensores Ativos}}: os sensores ativos emitem sua própria energia para o ambiente, para depois captar a resposta (reação) que esta energia emitida produz. Geralmente possuem resposta mais eficiente pois não dependem da energia do ambiente, possuem sua própria fonte. No entanto, esses sensores, ao emitirem energia (de qualquer tipo), podem influenciar o estado atual do ambiente, alterando-o.
+        \begin{itemize}
+            \scriptsize
+            \item Exemplo: câmera com flash, sonar, laser.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Locomoção}
+    \centering
+    \only<1>
+    {
+        \includegraphics[width=0.9\textwidth]{img05/classificação_1.png}      
+    }
+    \only<2>
+    {
+        \includegraphics[width=0.9\textwidth]{img05/classificação_2.png}      
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensores - Conceitos}
+    \begin{itemize}
+        \item \textbf{Alcance (range)}: o alcance possível de valores para o sensor, entre o limite inferior e o limite superior.
+        \begin{itemize}
+            \scriptsize
+            \item Exemplo: laser rangefinder com distâncias entre 0,3m e 25m.
+        \end{itemize}
+        \item \textbf{Resolução (resolution)}: a diferença mínima entre dois valores para que o sensor consiga distingui-los.
+        \begin{itemize}
+            \scriptsize
+            \item[] Exemplo: multímetro com resolução de 0,01V.
+        \end{itemize}
+        \item \textbf{Frequência ou banda passante (Frequency/Bandwidth)}: é a taxa de atualização das informações do sensor, em outras palavras, a velocidade de streaming de um sensor.
+        \begin{itemize}
+            \scriptsize
+            \item[] Exemplo: a frequência de atualização é de 10Hz.
+        \end{itemize}
+        \item \textbf{Acurácia (accuracy)}: capacidade do sensor medir estados e informar valores próximos à realidade. Dado por:
+        \begin{itemize}
+            \scriptsize
+            \item[] $\text{acuracia} = 1 - \frac{|m-v|}{v}$, onde \textit{m} é o valor medido e \textit{v} é o valor real.
+        \end{itemize}
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensores - Conceitos}
+    \begin{itemize}
+        \item \textbf{Precisão (precision)}: a capacidade do sensor informar valores consistentes (próximos) uns dos outros quando está medindo algum estado estacionário.
+        \begin{itemize}
+            \scriptsize
+            \item Não confunda \textbf{acurácia} (valor do sensor tem proximidade com o valor real do estado medido) com \textbf{precisão} (valor atual dado pelo sensor tem proximidade com os valores passados dados pelo sensor).
+
+        \end{itemize}
+        \item \textbf{Erros sistemáticos (systematic errors)}: são erros causados por fatores determinísticos, que podem ser corrigidos por calibração. Podem ser escritos por meio de equações bem definidas.
+        \item \textbf{Erros não-determinísticos ou aleatórios (non-deterministic errors)}: são erros que possuem natureza aleatória, e não podem ser corrigidos por meio de calibração. Somente podem ser descritos por meio de probabilidades.
+    \end{itemize}    
+\end{frame}

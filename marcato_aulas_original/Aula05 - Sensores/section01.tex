@@ -1,0 +1,411 @@
+\section{Contato}
+
+\begin{frame}
+    \frametitle{Sensores de Contato}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c c c}
+                \includegraphics[width=0.3\textwidth]{img05/contato_1.png} &
+                \includegraphics[width=0.3\textwidth]{img05/contato_2.png} &
+                \includegraphics[width=0.3\textwidth]{img05/contato_3.png} \\
+            \end{tabular}
+            \includegraphics[width=0.7\textwidth]{img05/contato_4.png} \\            
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Os sensores táteis, adquirem a informação de contato com o ambiente por meio de interação física.
+                \item Podem servir a diversos propósitos, tal qual um para-choque ou então um sensor que identifica a uma garra quando parar, ou em mãos robóticas, informando que o toque ocorreu.
+                \item Os mais comuns empregam chaves normalmente abertas e fechadas, efeitos piezelétricos e piezoresistivos, capacitivos e assim por diante.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\section{Encoder}
+\begin{frame}
+    \frametitle{Sensor de movimento: Encoder}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c c}
+                \includegraphics[width=0.4\textwidth]{img05/encoder_1.png} &
+                \includegraphics[width=0.4\textwidth]{img05/encoder_2.png} \\
+            \end{tabular}
+            \includegraphics[width=0.5\textwidth]{img05/lente_fotografica.png} \\            
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item É um dispositivo eletromecânico que conta ou reproduz pulsos elétricos a partir do movimento rotacional de seu eixo.
+                \item Pode ser definido como um transdutor de posição angular.       
+                \item \textbf{Exemplo de utilização de encoders em robótica}: medir a posição ou velocidade de motores utilizados para mover robôs.
+                \item Se os valores dos encoders forem integrados (utilize um integrador digital), proporcionarão uma estimação da posição do robô. A posição do robô é chamada de \textbf{hodometria}.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensor de movimento: Encoder}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \scriptsize
+            \textbf{Funcionamento regular}: o aparato conta o número de incrementos/transições (1 para sinal elevado – houve uma transição – e 0 para sinal baixo – ainda não houve uma transição) mas não pode dizer a direção do movimento.
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Os encoders são sensores \textbf{proprioceptivos}, pois medem estados internos do robô (no caso, posição e velocidade).
+                \item Dependendo do fabricante, encontra-se de diversas resoluções, desde 64 a mais de 50.000 incrementos (“ticks”, pulsos, contagens) por cada revolução do eixo do motor.
+                \item Para maiores resoluções pode-se utilizar interpolação.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img05/encoder_3.png} \\            
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensor de movimento: Encoder}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \scriptsize
+            \textbf{Funcionamento em quadratura}: utiliza-se dois sensores deslocados entre si em fase de 90º (quadratura, um elevado e outro baixo). A ordem de qual sensor produz sinal elevado (1) primeiro diz a direção do movimento. Além da direção, a resolução neste modo de funcionamento é 4 vezes maior.
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{img05/encoder_4.png} \\            
+        \end{column}
+    \end{columns}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.7\textwidth]{img05/encoder_6.png} \\            
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.7\textwidth]{img05/encoder_5.png} \\            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Giros, Acelerômetros, IMUs}
+\begin{frame}
+    \frametitle{Sensor de orientação: Giroscópio}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.8\textwidth]{img05/giroscópio.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Os \textbf{ópticos} utilizam lasers emitidos em duas direções, uma viajando no sentido horário e outra no sentido anti-horário.
+                \item Quando o aparato gira, as fases relativas dos lasers são deslocadas de acordo com a velocidade angular do movimento, uma vez que para um dos lasers o caminho ficou mais longo, e para o outro mais curto (efeito Sagnac).
+                \item Mede-se a diferença de fase entre os dois feixes, e essa diferença entre as fases dos feixes é proporcional à velocidade angular do corpo e, consequentemente, ao ângulo do aparato girante.
+                \item Ring Laser Gyroscope, RLG, que utiliza o efeito Sagnac
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensor de Inércia: Acelerômetros}
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.7\textwidth]{img05/massa_mola_amortecedor.png}
+            \begin{mdframed}[%
+                            backgroundcolor=blue!20,   % cor de fundo
+                            linecolor=red,               % cor da borda
+                            linewidth=1pt,               % espessura da borda
+                            roundcorner=4pt,             % cantos arredondados
+                            innertopmargin=6pt,          % espaço interno acima
+                            innerbottommargin=6pt,       % espaço interno abaixo
+                            innerleftmargin=6pt,         % espaço interno à esquerda
+                            innerrightmargin=6pt         % espaço interno à direita
+                            ]
+                \scriptsize
+                \begin{itemize}
+                    \scriptsize
+                    \item Na superfície da Terra, o acelerômetro sempre indicará, pelo menos, 1g ao longo do eixo vertical, e 0g em queda-livre.
+                    \item Por isso, para obter a aceleração inercial (correspondente ao movimento do corpo), é necessário subtrair a gravidade.
+                \end{itemize}
+            \end{mdframed}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \centering
+            \begin{itemize}
+                \scriptsize
+                \item Conforme os princípios físicos, para alterar movimentos de corpos é necessário imprimir forças sobre eles.
+                \item Os acelerômetros são sensores que medem todas as forças que estejam atuando sobre eles, incluindo a gravidade.
+                \item Os acelerômetros atuam como sistemas massa-mola-amortecedor, equacionado como:
+            \end{itemize}
+            \begin{equation*}
+                F_{\text{aplicada}} = F_{\text{inercial}} + F_{\text{amortecida}} + F_{\text{elástica}} 
+            \end{equation*}
+            \begin{equation*}
+                F_{\text{aplicada}} = m\ddot{x} + c\dot{x} + kx
+            \end{equation*}
+            \begin{itemize}
+                \scriptsize
+                \item[] Onde:
+                \item \textbf{m} é a massa de prova.
+                \item \textbf{c} é o coeficiente de amortecimento.
+                \item \textbf{k} é a constante da mola.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Unidades de Medidas Inerciais (IMU)}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.9\textwidth]{img05/IMU.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item As \textbf{Inertial Measurement Units (IMUs)} são dispositivos que medem posições relativas (x, y, z), orientações (roll, pitch, yaw), velocidades e acelerações de um corpo em movimento.
+                \item Combinam as funções dos acelerômetros, giroscópios, bússolas além de possuírem integradores para o cálculo de hodometria.
+                \item São unidades inerciais completas, sensíveis a erros, corrigindo a hodometria simples (dead reckoning) provida pelos encoders.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\section{Câmeras}
+\begin{frame}
+    \frametitle{Câmeras}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.7\textwidth]{img05/câmera_2.png} \\
+                \includegraphics[width=0.7\textwidth]{img05/câmera_1.png} \\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item As câmeras são sensores bastante populares, que podem ser utilizados das mais variadas formas.
+                \item A área de pesquisa em imagens é denominada de visão computacional, em que a visão robótica é uma das áreas.
+                \item Por meio de técnicas de manipulação de imagens, é possível obter distâncias, características (features), identificar objetos e pessoas, obter caminhos, dentre muitas outras aplicações.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Câmeras - Knectic}
+    \centering
+    \includegraphics[width=0.95\textwidth]{img05/kinect.png}
+\end{frame}
+
+\begin{frame}{O que é a Câmera Kinect?}
+    \begin{itemize}
+        \item Sensor desenvolvido originalmente pela Microsoft para o Xbox.
+        \item Usa visão computacional para captar profundidade, cor e movimento.
+        \item Combina:
+        \begin{itemize}
+            \item Câmera RGB (imagem tradicional)
+            \item Sensor de profundidade (depth camera)
+            \item Microfones e acelerômetros (em versões completas)
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Câmera Kinect: Como Funciona?}
+    \begin{itemize}
+        \item A câmera de profundidade projeta um padrão infravermelho (IR).
+        \item O padrão refletido é captado por um sensor e processado para estimar a distância de cada ponto.
+        \item Resulta em uma \textbf{imagem de profundidade} (depth map), com cada pixel representando uma distância.
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \textbf{Alternativamente (em modelos mais novos):} usa tecnologia de \textit{Time-of-Flight (ToF)} para medir o tempo que a luz leva para voltar ao sensor.
+\end{frame}
+
+\begin{frame}{Câmera Kinect: Vantagens}
+    \begin{itemize}
+        \item Captura simultânea de imagem colorida e profundidade.
+        \item Excelente para rastreamento de corpo humano e gestos.
+        \item Pronto para uso com SDKs acessíveis.
+        \item Operação em tempo real com boa precisão.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Câmera Kinect: Aplicações}
+    \begin{itemize}
+        \item Jogos e interfaces baseadas em gestos.
+        \item Robótica (percepção 3D e navegação).
+        \item Mapeamento de ambientes (SLAM).
+        \item Realidade aumentada e captura de movimento.
+        \item Reconhecimento de pessoas e gestos em segurança.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{O que são Câmeras Baseadas em Eventos?}
+    \begin{itemize}
+        \item Diferente das câmeras tradicionais, que capturam imagens em quadros fixos.
+        \item Cada pixel funciona de forma independente e assíncrona.
+        \item Gera eventos apenas quando há variação significativa de luminosidade.
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \textbf{Cada evento contém:}
+    \begin{itemize}
+        \item Posição do pixel $(x, y)$
+        \item Tempo do evento (alta precisão temporal)
+        \item Polaridade da variação (aumento ou redução de brilho)
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Câmera Baseada em Eventos: Vantagens}
+    \begin{itemize}
+        \item Altíssima resolução temporal (microsegundos)
+        \item Baixa latência e baixo consumo de energia
+        \item Alta faixa dinâmica (HDR) – ideal para ambientes com iluminação extrema
+        \item Excelente desempenho com objetos rápidos
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Câmera Baseada em Eventos: Aplicações}
+    \begin{itemize}
+        \item Robótica e drones autônomos
+        \item Carros autônomos
+        \item Sistemas biomiméticos (inspirados na retina)
+        \item Visão computacional de alta velocidade
+    \end{itemize}
+    \href{https://youtu.be/0wGBpgIrd9M?si=j-tcaOsuDFyUieXV}{Link: Davide Scaramuzza }
+\end{frame}
+
+\section{GPS}
+\begin{frame}
+    \frametitle{Global Positioning System (GPS)}
+    \centering
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.8\textwidth]{img05/gps.png}\\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item O Sistema de Posicionamento Global é um sistema de localização global baseado em satélites e trilateração.
+                \item Desenvolvido originalmente pelos USA nas décadas de 1950 e 1960 para estratégias exclusivamente militares, foi liberado  uso pela população civil na metade da década de 1990.
+                \item Outros países desenvolveram seus próprios sistemas baseados em satélites, como o COMPASS (ou, BeiDou) da China, operacional a partir da década de 2000, o GLONASS russo, contemporâneo ao GPS, e o GALILEO da União Europeia e o NAVIC da Índia.
+                \item O projeto original do GPS contava com 24 satélites em órbitas de 12 horas a uma altura de, aproximadamente, 21000 km acima da superfície terrestre, já no meio interplanetário.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Sistemas de Posicionamento e Segurança Cibernética}
+    \textbf{Contexto:}
+    \begin{itemize}
+        \item O GPS foi desenvolvido pelos EUA com objetivos militares e só posteriormente liberado ao uso civil.
+        \item A dependência exclusiva de um sistema estrangeiro representa um risco estratégico e cibernético.
+        \item Outros países criaram seus próprios sistemas (GLONASS - Rússia, BeiDou - China, GALILEO - UE, NAVIC - Índia) para garantir autonomia.
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \textbf{Riscos associados à dependência do GPS:}
+    \begin{itemize}
+        \item Sinal pode ser bloqueado, degradado ou falsificado (\textit{spoofing}) em tempos de crise.
+        \item Impacto direto em setores críticos: telecomunicações, transporte, energia e defesa.
+        \item Falta de controle sobre atualizações, segurança e integridade dos dados recebidos.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Independência Tecnológica e Geopolítica}
+    \begin{itemize}
+        \item O domínio de sistemas de navegação por satélite está ligado à soberania nacional e geopolítica.
+        \item Ter um sistema próprio ou acesso a múltiplos sistemas reduz vulnerabilidades.
+        \item Integração com estratégias de defesa cibernética e proteção de infraestrutura crítica.
+        \item Investimentos em sistemas nacionais impulsionam inovação e capacitação tecnológica interna.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Conclusão:} Em um mundo cada vez mais digital e conectado, o controle autônomo sobre sistemas espaciais é um ativo estratégico fundamental.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Global Positioning System (GPS)}
+    \centering
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{tabular}{c}
+                \includegraphics[width=0.8\textwidth]{img05/satelite_gps.png}\\
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{itemize}
+                \scriptsize
+                \item Os satélites de GPS se chamam NAVSTAR (NAVigation Satellite with Time And Ranging).
+                \item Cada satélite possui um relógio atômico para sincronia de posicionamento, corrige o efeito Doppler na transmissão de seus dados por meio da Teoria da Relatividade.
+                \item As órbitas desses satélites são tais que, a todo momento no horizonte de um usuário, existam, pelo menos, quatro satélites disponíveis.
+            \end{itemize}
+        \end{column}    
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Global Positioning System (GPS)}
+    \begin{itemize}
+        \scriptsize
+        \item A localização do GPS é feita por meio do princípio matemático da trilateração. No caso, trilateração em 3D.
+        \item Existem estações GPS bem estabelecidas por todo o planeta.
+    	\item A trilateração em 2D é facilmente explicada da seguinte maneira: 
+    \end{itemize}
+    \only<1>
+    {
+        \begin{itemize}
+            \scriptsize
+            \item[] Uma fonte (ex: satélite) lhe revela que está a uma distância d1 de uma estação conhecida (ex: numa cidade) denominada A.
+        \end{itemize}
+        \centering                
+        \includegraphics[width=0.8\textwidth]{img05/gps_1.png}\\
+    }
+    \only<2>
+    {
+        \begin{itemize}
+            \scriptsize
+            \item[] Uma segunda fonte (outro satélite) informa que o usuário está a uma distância d2 de um outro ponto conhecido B.
+        \end{itemize}
+        \centering                
+        \includegraphics[width=0.9\textwidth]{img05/gps_2.png}\\
+    }
+    \only<3>
+    {
+        \begin{itemize}
+            \scriptsize
+            \item[] Para eliminar a ambiguidade, é necessário obter a informação de uma terceira fonte (satélite), de uma distância d3 de C.
+        \end{itemize}
+        \centering                
+        \includegraphics[width=0.9\textwidth]{img05/gps_3.png}\\
+    }
+    \only<4>
+    {
+        \centering                
+        \includegraphics[width=0.95\textwidth]{img05/gps_4.png}\\
+    }
+\end{frame}

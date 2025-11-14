@@ -1,0 +1,185 @@
+\section{Estrutura dos Robôs Móveis}
+\begin{frame}
+    \frametitle{Estrutura de Robôs Móveis Terrestres}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \scriptsize \textbf{Tração/Propulsão}: Responsável pela locomoção do robô.
+                \begin{itemize}
+                    \item \scriptsize \textbf{\underline{Rodas}}: meio de tração mais simples, mas confina o robô a se locomover em superfícies planas. Carros..
+                    \item \scriptsize \textbf{\underline{Pernas}}: meio de tração mais sofisticado, mas difícil de operar (muitos graus de liberdade) e construir (juntas eficientes). Humanóides, insetos, etc.
+                    \item \scriptsize \textbf{\underline{Esteiras}}: meio de tração bom para vencer obstáculos, mas limita a capacidade de manobra do robô. Tanques de guerra.
+                    \item \scriptsize \textbf{\underline{Outros Meios}}: rastejante (répteis), saltitante (canguru), combinação dos demais.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+		  \centering
+		  \includegraphics[width=5.5cm, height=6cm]{img03/Tracao-Propulsao.png}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sensoriamento}
+    \scriptsize
+    \begin{itemize}
+        \item responsável por medir grandezas físicas do robô e do ambiente.
+        \item Exemplos: distâncias, rotações, proximidades, imagens, sistema de posicionamento global, etc.
+    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=5.5cm, height=6cm]{img03/sensores.png}            
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=5.5cm, height=6cm]{img03/pointcloud.png}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Processamento}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \only<1>
+            {
+                \centering
+    		  \includegraphics[width=5.5cm, height=6cm]{img03/proce_1.png}
+            }
+            \only<2>
+            {
+                \centering
+    		  \includegraphics[width=5.5cm, height=6cm]{img03/arduino.jpg}
+            }
+        
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \only<1>
+            {
+                \centering
+    		  \includegraphics[width=5cm, height=5.2cm]{img03/proce_2.png} 
+            }
+            \only<2>
+            {
+                \centering
+    		  \includegraphics[width=6cm, height=5.2cm]{img03/odroid.jpg} 
+            }
+        \end{column}
+    \end{columns}
+    \scriptsize
+    \begin{itemize}
+        \item responsável pela execução do controle de alto nível. Exemplo: Grandezas físicas do robô e do ambiente. Medir distâncias, rotações, proximidades, imagens, sistema de posicionamento global, SLAM, YOLO, etc.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Flight Control Unit (FCU)}
+    \begin{itemize}
+        \scriptsize
+        \item \textbf{Definição:} A Flight Control Unit (FCU) é o "cérebro" de controle dos robôs móveis aéreos, sendo responsável por interpretar sensores, calcular comandos e estabilizar o veículo.
+
+        \only<1>
+        {
+            \item \textbf{Funções principais:}
+            \begin{itemize}
+                \scriptsize
+                \item Leitura e fusão de dados de sensores (IMU, GPS, barômetro, magnetômetro).
+                \item Execução de algoritmos de controle de baixo nível (PID, MPC, LQR).
+                \item Comando de atuadores (motores, servos, superfícies de controle).
+                \item Comunicação com a estação de solo (via MAVLink ou similar).
+            \end{itemize}
+        }
+
+        \only<2>
+        {
+            \item \textbf{Exemplos de FCUs populares:}
+            \begin{itemize}
+                \item Pixhawk e Cube Orange
+            \end{itemize}
+            
+            \item \textbf{Aplicações:}
+            \begin{itemize}
+                \item Drones multirrotores, aviões VTOL, carros autônomos, robôs anfíbios.
+            \end{itemize}
+        }
+        \end{itemize}
+    
+    \vspace{0.3cm}
+    \centering
+    \includegraphics[width=0.35\linewidth]{img03/cube_orange.jpg} % Substitua pela imagem desejada
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comunicação}
+    \scriptsize
+    \begin{itemize}
+        \item responsável pelo tráfego de informações e pela comunicação do robô com o mundo exterior.
+        \item Exemplos: displays, redes sem fios, interpretadores e sintetizadores de fala, etc.
+    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=4cm]{img03/telemetria_1.png}  
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=6cm]{img03/telemetria_2.png} 
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=3.5cm]{img03/telemetria_3.png} 
+        \end{column}
+    \end{columns}    
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Alimentação}
+    \scriptsize
+    \begin{itemize}
+        \item responsável por fornecer energia aos demais subsistemas, mantendo as funcionalidades ativas.
+        \item Exemplos: baterias, motogeradores, cordões umbilicais, slip ring, etc.
+    \end{itemize}
+    \only<1>
+    {
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=4cm]{img03/bateria_1.png}  
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=3.5cm]{img03/bateria_3.png} 
+        \end{column}
+    \end{columns}   
+    }
+    \only<2>
+    {
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=4cm]{img03/bateria_2.png}  
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=3.5cm]{img03/bateria_4.png} 
+        \end{column}
+    \end{columns}   
+    }
+    \only<3>
+    {
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \centering
+		  \includegraphics[width=6cm, height=4cm]{img03/slip_ring_1.png}  
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+		  \includegraphics[width=3.5cm, height=2.5cm]{img03/slip_ring_2.png} 
+        \end{column}
+    \end{columns}   
+    }
+
+\end{frame}
+

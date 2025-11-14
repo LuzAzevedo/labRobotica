@@ -1,0 +1,242 @@
+% ---------- Metadata ----------
+\title[Aula 5]{Aula 5 - ROS 2 (Python) — Services \& Parameters}
+\author[Marcato]{Professor: André L. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+% ---------- Conteúdo ----------
+\section{Conceitos Fundamentais}
+
+% --- Slide: Services \& Parameters — conceitos ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html}{\uline{ROS 2 (Python) — Services \& Parameters}}}
+  \begin{itemize}
+    \item \textbf{Service}: comunicação \textit{request/response} entre dois nós (cliente $\rightarrow$ servidor).
+    \item \textbf{Client}: envia uma \textbf{requisição}; \textbf{Server}: processa e retorna \textbf{resposta}.
+    \item Usamos \textbf{Services} para operações pontuais/síncronas (reset, salvar, consultar estado).
+    \item \textbf{Parameters}: pares nome/valor no escopo do nó; permitem configurar comportamento (CLI, YAML, API, json, etc.).
+  \end{itemize}
+\end{frame}
+
+% --- Slide: Diagrama de Services ---
+\begin{frame}{Arquitetura de Services}
+  \centering
+  \includegraphics[width=0.9\textwidth]{service.png}
+\end{frame}
+
+% --- Slide: Mensagens .srv e fluxo ---
+\begin{frame}[fragile]{Interfaces .srv e fluxo de chamada}
+  \begin{itemize}
+    \item Uma interface \texttt{.srv} define \textbf{Request} e \textbf{Response} (ex.: \texttt{AddTwoInts.srv}).
+    \item Fluxo: \textbf{client} chama $\rightarrow$ \textbf{server} executa callback $\rightarrow$ retorna resposta.
+    \item Ferramentas úteis: \texttt{ros2 service list}, \texttt{ros2 service type}, \texttt{ros2 interface show}, \texttt{ros2 service call}.
+  \end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+# AddTwoInts.srv (exemplo)
+int64 a
+int64 b
+---
+int64 sum
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html}{\uline{Services — comandos úteis}}}
+  \begin{itemize}
+    \item \texttt{ros2 service list} — lista os serviços disponíveis.
+    \item \texttt{ros2 service type <service\_name>} — mostra o tipo \texttt{.srv} de um serviço.
+    \item \texttt{ros2 interface show <pkg/srv/Tipo>} — exibe a definição (Request/Response).
+    \item \texttt{ros2 service call <service\_name> <srv\_type> "\{...\}"} — envia uma requisição e imprime a resposta.
+  \end{itemize}
+
+  \vspace{0.6em}
+
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 service list
+$ ros2 service type /add_two_ints
+$ ros2 interface show example_interfaces/srv/AddTwoInts
+  \end{lstlisting}
+
+  \vspace{0.3em}
+
+  \begin{lstlisting}[style=bashstyle]
+$ ros2 service call /add_two_ints \
+  example_interfaces/srv/AddTwoInts "{a: 2, b: 3}"
+  \end{lstlisting}
+\end{frame}
+
+
+\section{Services em Python}
+
+% --- Slide: Servidor em rclpy ---
+\begin{frame}[fragile]{Servidor (Python) — \texttt{AddTwoInts}}
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_server.png}
+  \end{center}
+\end{frame}
+
+% --- Slide: Cliente em rclpy ---
+\begin{frame}[fragile]{Cliente (Python) — \texttt{AddTwoInts}}
+  \begin{center}
+  \includegraphics[width=0.77\textwidth]{code_client.png}
+  \end{center}
+\end{frame}
+
+\section{Parameters}
+
+% --- Slide: Parâmetros — noções e API ---
+\begin{frame}[fragile]{Parâmetros — noções e API}
+  \begin{itemize}
+    \item Tipos: \texttt{bool}, \texttt{int}, \texttt{double}, \texttt{string}, listas.
+    \item Operações: \textbf{declarar}, \textbf{obter}, \textbf{definir}, \textbf{descrever}, \textbf{listar}.
+    \item CLI: \texttt{ros2 param list/get/set/describe/dump/load}.
+  \end{itemize}
+
+\begin{lstlisting}[style=pythonstyle]
+class UsesParams(Node):
+    def __init__(self):
+        super().__init__('uses_params')
+        self.declare_parameter('rate_hz', 2.0)
+        rate = self.get_parameter('rate_hz').get_parameter_value().double_value
+        self.timer = self.create_timer(1.0 / rate, self.cb)
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: YAML de parâmetros e remapeamentos ---
+\begin{frame}[fragile]{YAML de parâmetros e remapeamentos}
+\textbf{Arquivo YAML (exemplo)}
+\begin{lstlisting}[style=bashstyle]
+uses_params:
+  ros__parameters:
+    rate_hz: 5.0
+    greeting: "Ola, ROS 2!"
+\end{lstlisting}
+
+\vspace{0.5em}
+\textbf{Remapeamentos (\texttt{--ros-args})}
+\begin{lstlisting}[style=bashstyle]
+# Remapear topico e nome do no
+$ ros2 run my_pkg my_node \
+  --ros-args \
+  -r __node:=renomeado \
+  -r old_topic:=new_topic \
+  --params-file params.yaml
+\end{lstlisting}
+\end{frame}
+
+\section{Prática}
+
+% --- Slide: Preparação do pacote ---
+\begin{frame}[fragile]{Prática — preparar pacote (server \& client)}
+  \begin{itemize}
+    \item Crie pacote Python com dependência \texttt{example\_interfaces}.
+  \end{itemize}
+\begin{lstlisting}[style=bashstyle]
+$ cd ~/ros2_ws/src
+$ ros2 pkg create --build-type ament_python my_services_py \
+  --dependencies rclpy example_interfaces
+# registre no setup.py (entry_points):
+# 'console_scripts': [
+#   'add_two_ints_server = my_services_py.server:main',
+#   'add_two_ints_client = my_services_py.client:main',
+#   'uses_params      = my_services_py.uses_params:main',
+# ]
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: Build e Server ---
+\begin{frame}[fragile]{Prática — build e execução (1/2)}
+  \begin{itemize}
+    \item Compile o workspace e execute o \textbf{server} em um terminal.
+  \end{itemize}
+
+\textbf{Build (uma vez):}
+\begin{lstlisting}[style=bashstyle]
+$ cd ~/ros2_ws
+$ colcon build --packages-select my_services_py \
+  --symlink-install
+$ source install/setup.bash
+\end{lstlisting}
+
+\vspace{0.5em}
+\textbf{Terminal 1 — Server:}
+\begin{lstlisting}[style=bashstyle]
+$ source ~/ros2_ws/install/setup.bash
+$ ros2 run my_services_py add_two_ints_server
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: Client e Inspeção ---
+\begin{frame}[fragile]{Prática — build e execução (2/2)}
+  \begin{itemize}
+    \item Execute o \textbf{client} em outro terminal e use ferramentas de inspeção.
+  \end{itemize}
+
+\textbf{Terminal 2 — Client:}
+\begin{lstlisting}[style=bashstyle]
+$ source ~/ros2_ws/install/setup.bash
+$ ros2 run my_services_py add_two_ints_client 41 1
+\end{lstlisting}
+
+\vspace{0.5em}
+\textbf{Inspeção rápida:}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 service list
+$ ros2 service type /add_two_ints
+$ ros2 interface show example_interfaces/srv/AddTwoInts
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: ros2 service call pela CLI ---
+\begin{frame}[fragile]{Prática — \texttt{ros2 service call}}
+  \begin{itemize}
+    \item Teste o servidor diretamente pela CLI.
+  \end{itemize}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 service call /add_two_ints \
+  example_interfaces/srv/AddTwoInts "{a: 2, b: 3}"
+\end{lstlisting}
+
+  \vspace{0.4em}
+  \begin{itemize}
+    \item deixe o \texttt{server} rodando e repita chamadas com valores diferentes.
+  \end{itemize}
+\end{frame}
+
+% --- Slide: Parâmetros via CLI e YAML ---
+\begin{frame}[fragile]{Prática — parâmetros (CLI \& YAML)}
+\textbf{CLI de parâmetros}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 param list uses_params
+$ ros2 param get  uses_params rate_hz
+$ ros2 param set  uses_params rate_hz 10.0
+$ ros2 param describe uses_params rate_hz
+\end{lstlisting}
+
+\vspace{0.5em}
+\textbf{Rodar com YAML \& remap}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 run my_services_py uses_params \
+  --ros-args \
+  --params-file params.yaml \
+  -r __node:=cfg_node \
+  -r /old:=/new
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: Exercício final ---
+\begin{frame}[fragile]{Exercício final}
+  \begin{itemize}
+    \item Adapte o servidor para \textbf{usar um parâmetro} \texttt{scale} (default = 1.0) e retornar \texttt{scale * (a + b)}.
+    \item Exponha \texttt{scale} via \textbf{YAML} e mostre efeito com \texttt{ros2 service call}.
+    \item Remapeie o nome do serviço de \texttt{/add\_two\_ints} para \texttt{/sum} usando \texttt{-r}.
+  \end{itemize}
+\end{frame}

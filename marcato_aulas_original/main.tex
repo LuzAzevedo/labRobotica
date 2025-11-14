@@ -1,0 +1,205 @@
+
+
+%----------------------------------------------------------------------------------------
+% OPÇÕES DE PACOTES (ANTES DO DOCUMENTCLASS)
+%----------------------------------------------------------------------------------------
+\PassOptionsToPackage{table}{xcolor}  % Passa opção [table] para xcolor (beamer carrega xcolor automaticamente)
+
+%----------------------------------------------------------------------------------------
+% CLASSE DO DOCUMENTO E CONFIGURAÇÕES BÁSICAS
+%----------------------------------------------------------------------------------------
+\documentclass[
+    11pt,               % Tamanho padrão da fonte
+    % t,                % Alinhar verticalmente ao topo
+    %aspectratio=169,   % Definir proporção 16:9
+]{beamer}
+\graphicspath{{img/}}         % Define o diretório das imagens
+
+%----------------------------------------------------------------------------------------
+% PACOTES NECESSÁRIOS (ORDEM IMPORTANTE)
+%----------------------------------------------------------------------------------------
+\usepackage{
+    booktabs,     % Melhora a aparência das linhas em tabelas
+    palatino,     % Define Palatino como fonte principal
+    subcaption    % Suporte para subfiguras
+}
+% \usepackage[default]{opensans}  % Define Open Sans como fonte secundária (comentado: pacote não disponível)
+\usepackage{listings}           % Para exibição de código (deve ser carregado antes do config)
+\input{config/code_langs}       % Importa configurações para highlight de código
+
+%----------------------------------------------------------------------------------------
+% CONFIGURAÇÃO DO TEMA
+%----------------------------------------------------------------------------------------
+% Tema Base
+\usetheme{Boadilla}                          % Define o tema principal
+\useinnertheme{circles}                      % Tema interno com círculos
+\useoutertheme{miniframes}                   % Tema externo com miniframes
+\setbeamertemplate{navigation symbols}{}     % Remove símbolos de navegação
+
+% Cores Personalizadas
+\definecolor{primaryColor}{RGB}{20,45,105}   % Cor primária - azul escuro
+\definecolor{secondaryColor}{RGB}{0,100,160} % Cor secundária - azul médio
+
+% Configurações de Cores
+\setbeamercolor{structure}{fg=primaryColor}
+\setbeamercolor{palette primary}{bg=primaryColor, fg=white}
+\setbeamercolor{palette secondary}{bg=secondaryColor, fg=white}
+\setbeamercolor{title}{bg=primaryColor, fg=white}
+
+% Cores do Cabeçalho e Rodapé
+%\setbeamercolor{headline}{bg=secondaryColor, fg=white}
+%\setbeamercolor{section in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{subsection in head/foot}{bg=secondaryColor, fg=white}
+\setbeamercolor{author in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{title in head/foot}{bg=secondaryColor, fg=white}
+\setbeamercolor{date in head/foot}{bg=primaryColor, fg=white}
+\setbeamercolor{page number in head/foot}{bg=primaryColor, fg=white}
+
+
+% Inseridos André Marcato
+\usepackage{hyperref}
+\usepackage{graphicx}  % Para inserir imagens
+\usepackage{multicol}  % Para múltiplas colunas
+\usepackage{tcolorbox} % Para criar caixas de destaque
+\usepackage{tikz}
+\usepackage[normalem]{ulem}
+
+
+% Definir comando para adicionar a marca d'água
+%\setbeamertemplate{background}{%
+%    \begin{tikzpicture}[remember picture,overlay]
+%        \node[opacity=0.2] at (current page.center) {
+%            \includegraphics[width=1.0\paperwidth]{img/marcadagua2.png} % Ajuste o %tamanho conforme necessário
+%        };
+%    \end{tikzpicture}
+%}
+
+% Configuração do estilo para código Python
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    xleftmargin=10pt,
+    xrightmargin=5pt
+}
+
+\usepackage{mdframed}  
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAFIA
+%----------------------------------------------------------------------------------------
+% \usepackage[style=alphabetic,backend=biber]{biblatex}  % Comentado: pacote biblatex não disponível
+% \addbibresource{bibliografia.bib}  % Comentado: requer biblatex
+
+%----------------------------------------------------------------------------------------
+% INFORMAÇÕES DA APRESENTAÇÃO
+%----------------------------------------------------------------------------------------
+
+% Título Aula01
+\title[Robótica Móvel]{Plano de Curso \\ Orientações Gerais \\ Motivação}    
+
+% Título Aula02
+\title[Robótica Móvel]{Introdução ao ROS \\ Robotic Operating System}
+
+% Título Aula03
+\title[Robótica Móvel]{Introdução à Robótica Móvel}
+
+% Título Aula04
+\title[Robótica Móvel]{Locomoção}
+
+% Título Aula05
+\title[Robótica Móvel]{Sensores}
+
+%\title[Robótica Móvel]{Trabalho Sobre o YOLO}
+
+\author[Juiz de Fora]{Prof. André Luís Marques Marcato}            
+\institute[Brasil]{Robótica Móvel}
+\date[Prof. André Marcato]{Primeiro Semestre / 2025}
+
+%----------------------------------------------------------------------------------------
+% INÍCIO DO DOCUMENTO
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% Slide de título com logo
+\begin{frame}
+%    \begin{center}
+%    {\small Preparado para:}
+%    \end{center}
+%    \begin{figure}
+%        \includegraphics[width=0.25\linewidth]{img/Jirau.png}
+%    \end{figure}
+    \titlepage
+\end{frame}
+
+% Sumário
+\begin{frame}
+    \frametitle{Estrutura da apresentação}
+    \tableofcontents
+\end{frame}
+
+% (AULA 01) - Plano de Curso
+%\include{Aula01 - Plano de Curso/section00}
+%\include{Aula01 - Plano de Curso/section01}
+%\include{Aula01 - Plano de Curso/section02}
+
+% (AULA 02) - Introdução ao ROS
+\include{Aula02 - Introdução ao ROS/section00}
+\include{Aula02 - Introdução ao ROS/section01}
+\include{Aula02 - Introdução ao ROS/section02}
+\include{Aula02 - Introdução ao ROS/section03}
+\include{Aula02 - Introdução ao ROS/section04}
+
+% (AULA 03) - Introdução à Robótica Móvel
+%\include{Aula03 - Introdução à Robótica Móvel/section00}
+%\include{Aula03 - Introdução à Robótica Móvel/section01}
+%\include{Aula03 - Introdução à Robótica Móvel/section02}
+
+% (AULA 04) - Locomoção
+%\include{Aula04 - Locomoção/section00}
+%\include{Aula04 - Locomoção/section01}
+%\include{Aula04 - Locomoção/section02}
+%\include{Aula04 - Locomoção/section03}
+
+% (AULA 05) - Sensores
+%\include{Aula05 - Sensores/section00}
+%\include{Aula05 - Sensores/section01}
+%\include{Aula05 - Sensores/section02}
+
+% (TRABALHOS)
+%\include{Trabalhos/YOLO}
+
+% Slide final
+
+\begin{frame}
+
+    \centering
+
+    \begin{tcolorbox}[colback=blue!10, colframe=blue!50, width=0.6\textwidth]
+        \centering
+        \includegraphics[width=0.7\textwidth]{img/theend.png} \\
+    \end{tcolorbox}
+
+    \vspace{0.5cm} % Espaço entre as seções
+
+    \begin{tcolorbox}[colback=green!10, colframe=green!50, width=0.7\textwidth]
+        \centering
+        \includegraphics[width=0.3\textwidth]{img/e-mail.png} \\
+        \begin{center}
+            {Muito Obrigado !!!} \\~ 
+            {\href{amarcato@ieee.org}{amarcato@ieee.org}} \\~
+        \end{center}
+    \end{tcolorbox}
+
+\end{frame}
+
+\end{document}
