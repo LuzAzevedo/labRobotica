@@ -1,0 +1,39 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{cmakestyle}{
+    language=[cmake]make,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=cmakestyle]
+# No topo do CMakeLists.txt
+find_package(rosidl_default_generators REQUIRED)
+
+# Liste seus arquivos aqui
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/RobotStatus.msg"
+  "srv/ResetOdom.srv"
+  "action/Goto.action"
+  DEPENDENCIES geometry_msgs # Se usar tipos de outros pacotes
+)
+\end{lstlisting}
+\end{document}
+
