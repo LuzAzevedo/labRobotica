@@ -1,0 +1,57 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+import time
+import rclpy
+from rclpy.action import ActionServer
+from rclpy.node import Node
+from action_tutorials_interfaces.action import Fibonacci
+
+class FibonacciActionServer(Node):
+    def __init__(self):
+        super().__init__('fibonacci_action_server')
+        self._action_server = ActionServer(
+            self, Fibonacci, 'fibonacci', self.execute_callback)
+
+    def execute_callback(self, goal_handle):
+        self.get_logger().info('Executando goal...')
+        feedback_msg = Fibonacci.Feedback()
+        feedback_msg.partial_sequence = [0, 1]
+
+        for i in range(1, goal_handle.request.order):
+            feedback_msg.partial_sequence.append(
+                feedback_msg.partial_sequence[i] + feedback_msg.partial_sequence[i-1])
+            goal_handle.publish_feedback(feedback_msg)
+            time.sleep(1) # Simula tarefa longa
+
+        goal_handle.succeed()
+        result = Fibonacci.Result()
+        result.sequence = feedback_msg.partial_sequence
+        return result
+\end{lstlisting}
+\end{document}
+
