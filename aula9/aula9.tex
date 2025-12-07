@@ -1,0 +1,140 @@
+% ---------- Metadata ----------
+\title[Aula 9]{Aula 9 - Título da Aula}
+\author[Marcato]{Professor: André L. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Engenharia Elétrica — Robótica e Automação Industrial}
+
+% ---------- Title ----------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------- Overview ----------
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+% ---------- Conteúdo ----------
+% ---------- Conteúdo Aula 9 ----------
+\section{Sistema de Launch}
+
+% --- Slide: O que é e Por que usar? ---
+\begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html}{\uline{ROS 2 Launch System}}}
+  \begin{itemize}
+    \item \textbf{Problema}: Iniciar 10 nós manualmente em 10 terminais é inviável.
+    \item \textbf{Launch}: Sistema para automatizar a execução e configuração de nós.
+    \item \textbf{Diferença do ROS 1}:
+      \begin{itemize}
+        \item ROS 1 usava XML (\texttt{.launch}).
+        \item ROS 2 usa \textbf{Python} (\texttt{.launch.py}). Isso permite lógica complexa (if/else, loops, busca de diretórios dinâmicos).
+      \end{itemize}
+    \item \textbf{Conceito}: Você descreve o estado final desejado do sistema.
+  \end{itemize}
+\end{frame}
+
+% --- Slide: Estrutura Básica ---
+\begin{frame}[fragile]{Estrutura Básica (.launch.py)}
+  \begin{itemize}
+    \item Deve retornar um objeto \texttt{LaunchDescription} contendo uma lista de \textbf{Actions} (Nós, Processos, Inclusões).
+  \end{itemize}
+
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_launch_basic.png}
+  \end{center}
+\end{frame}
+
+% --- Slide: Argumentos e Configuração ---
+\begin{frame}[fragile]{Argumentos e Dinâmica}
+  \begin{itemize}
+    \item \textbf{DeclareLaunchArgument}: Define variáveis de entrada (ex: cor, velocidade, namespace) com valor default.
+    \item \textbf{LaunchConfiguration}: Captura o valor desse argumento durante a execução.
+  \end{itemize}
+
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_launch_arguments.png}
+  \end{center}
+\end{frame}
+
+
+\section{Funcionalidades Avançadas}
+
+% --- Slide: Params, Remaps e Namespaces ---
+\begin{frame}[fragile]{Params, Remaps e Namespaces}
+  \begin{itemize}
+    \item Podemos injetar configurações diretamente na instanciação do \texttt{Node}.
+  \end{itemize}
+
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_launch_params.png}
+  \end{center}
+\end{frame}
+
+% --- Slide: Inclusão de Outros Launchs ---
+\begin{frame}[fragile]{Inclusão e Modularidade}
+  \begin{itemize}
+    \item Launchs podem chamar outros Launchs (\texttt{IncludeLaunchDescription}).
+    \item Útil para separar a lógica (ex: um launch para sensores, outro para navegação, um "main" que chama todos).
+  \end{itemize}
+
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_launch_include.png}
+  \end{center}
+\end{frame}
+
+
+\section{Prática}
+
+% --- Slide: Setup do Pacote ---
+\begin{frame}[fragile]{Prática — Ajuste do \texttt{setup.py}}
+  \begin{alertblock}{Importante}
+    Arquivos de launch não são código-fonte compilado, eles precisam ser copiados para a pasta \texttt{share} na instalação.
+  \end{alertblock}
+
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_setup_launch.png}
+  \end{center}
+  \begin{itemize}
+    \item Crie a pasta \texttt{launch/} na raiz do pacote (ao lado de \texttt{src}, \texttt{package.xml}).
+  \end{itemize}
+\end{frame}
+
+% --- Slide: Exemplo Prático (Arquivo) ---
+\begin{frame}[fragile]{Prática — \texttt{my_app.launch.py}}
+  \begin{center}
+  \includegraphics[width=0.85\textwidth]{code_launch_example.png}
+  \end{center}
+\end{frame}
+
+% --- Slide: Execução ---
+\begin{frame}[fragile]{Prática — Compilar e Executar}
+  \begin{itemize}
+    \item Sempre compile após criar/modificar launch files (para que sejam copiados para \texttt{install/share}).
+  \end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+$ colcon build --symlink-install
+$ source install/setup.bash
+
+# Sintaxe: ros2 launch <pacote> <arquivo>
+$ ros2 launch my_pkg my_app.launch.py
+\end{lstlisting}
+
+  \begin{itemize}
+    \item Passando argumentos via CLI:
+  \end{itemize}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 launch my_pkg my_app.launch.py bg_color:=100
+\end{lstlisting}
+\end{frame}
+
+% --- Slide: Exercício Final ---
+\begin{frame}[fragile]{Exercício Final}
+  \begin{block}{Orquestrador de Tartarugas}
+    Crie um arquivo \texttt{two_turtles.launch.py} que:
+  \end{block}
+  \begin{enumerate}
+    \item Inicie \textbf{duas janelas} do Turtlesim.
+    \item Use \textbf{Namespaces} diferentes para não colidirem (ex: \texttt{t1} e \texttt{t2}).
+    \item Declare um \textbf{Launch Argument} chamado \texttt{speed} (embora o turtlesim não use speed diretamente, use-o para imprimir um LogInfo ou passar como parâmetro fictício para treinar).
+    \item Remapeie o tópico \texttt{/t1/turtle1/cmd\_vel} para \texttt{/control\_signal}.
+  \end{enumerate}
+\end{frame}

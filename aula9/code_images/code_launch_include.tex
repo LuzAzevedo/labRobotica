@@ -1,0 +1,43 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+# ... dentro da lista do LaunchDescription:
+IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([
+        os.path.join(get_package_share_directory('outro_pkg'), 'launch'),
+        '/sensor_launch.py'
+    ]),
+    launch_arguments={'sensor_id': '1'}.items(),
+)
+\end{lstlisting}
+\end{document}
+

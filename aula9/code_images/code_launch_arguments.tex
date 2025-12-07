@@ -1,0 +1,49 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    # 1. Declara o argumento 'bg_color'
+    bg_color_arg = DeclareLaunchArgument(
+        'bg_color', default_value='255', description='Cor de fundo'
+    )
+
+    # 2. Usa o valor no parâmetro do nó
+    node = Node(
+        package='turtlesim',
+        executable='turtlesim_node',
+        parameters=[{'background_r': LaunchConfiguration('bg_color')}]
+    )
+
+    return LaunchDescription([bg_color_arg, node])
+\end{lstlisting}
+\end{document}
+

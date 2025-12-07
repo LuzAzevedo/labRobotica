@@ -1,0 +1,44 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+Node(
+    package='my_package',
+    executable='my_node',
+    name='custom_name',      # Renomeia o nó
+    namespace='robot1',      # Agrupa em /robot1/...
+    parameters=[
+        {'param_int': 10},   # Dicionário direto
+        'config/params.yaml' # Ou caminho para arquivo
+    ],
+    remappings=[
+        ('/old_topic', '/new_topic'),
+        ('/cmd_vel', '/robot1/cmd_vel')
+    ]
+)
+\end{lstlisting}
+\end{document}
+

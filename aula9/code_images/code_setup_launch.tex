@@ -1,0 +1,41 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+# setup.py
+import os
+from glob import glob
+# ...
+data_files=[
+    ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+    ('share/' + package_name, ['package.xml']),
+    
+    # ADICIONE ESTA LINHA:
+    (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
+],
+\end{lstlisting}
+\end{document}
+
