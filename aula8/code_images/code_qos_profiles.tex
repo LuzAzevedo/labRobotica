@@ -1,0 +1,47 @@
+\documentclass[preview,border=2pt]{standalone}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{darkgreen}\itshape,
+    frame=single,
+    framerule=0.5pt,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    keepspaces=true,
+    columns=fullflexible,
+    upquote=true,
+    extendedchars=true,
+    inputencoding=utf8
+}
+
+\begin{document}
+\begin{lstlisting}[style=pythonstyle]
+from rclpy.qos import QoSProfile
+from rclpy.qos import QoSReliabilityPolicy, QoSDurabilityPolicy
+
+# Perfil padrão (Sensor Data) - Foco em velocidade
+# (Best Effort, Volatile)
+qos_sensor = rclpy.qos.qos_profile_sensor_data
+
+# Perfil padrão (Services/Parameters) - Foco em garantia
+# (Reliable, Volatile)
+qos_services = rclpy.qos.qos_profile_services_default
+
+# Perfil Customizado
+my_qos = QoSProfile(
+    depth=10,
+    reliability=QoSReliabilityPolicy.RELIABLE,
+    durability=QoSDurabilityPolicy.TRANSIENT_LOCAL
+)
+\end{lstlisting}
+\end{document}
+
