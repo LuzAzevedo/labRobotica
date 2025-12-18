@@ -16,7 +16,6 @@
 % ---------- Conteúdo ----------
 \section{Conceitos Fundamentais}
 
-% --- Slide 1: Publishers & Subscribers — conceitos ---
 \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{ROS 2 (Python) — Publishers \& Subscribers}}}
     \begin{itemize}
       \item \textbf{Publisher}: node que \textbf{envia} mensagens para um \textbf{tópico}.
@@ -25,20 +24,53 @@
       \item Comunicação \textbf{assíncrona} baseada em callbacks; qualidade controlada por \textbf{QoS}.
     \end{itemize}
   \end{frame}
+
+  \section{Mensagens ROS}
+
+\begin{frame}[fragile]{Estrutura das Mensagens (.msg)}
+  \begin{itemize}
+    \item Tópicos são fortemente tipados. Todo Publisher/Subscriber deve concordar com o \textbf{tipo da mensagem}.
+    \item Pacotes comuns:
+    \begin{itemize}
+        \item \texttt{std\_msgs}: Tipos primitivos (String, Int32, Bool, Float64...).
+        \item \texttt{geometry\_msgs}: Geometria (Point, Pose, Twist, Vector3).
+        \item \texttt{sensor\_msgs}: Sensores (Image, LaserScan, Imu).
+    \end{itemize}
+  \end{itemize}
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{code7_msg_example.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Descobrindo estruturas de mensagens}
+  \begin{itemize}
+    \item Use a CLI para descobrir o que tem dentro de uma mensagem antes de usar no Python.
+  \end{itemize}
+\begin{lstlisting}[style=bashstyle]
+$ ros2 interface show std_msgs/msg/String
+# data: string
+
+$ ros2 interface show geometry_msgs/msg/Twist
+# Vector3  linear
+# Vector3  angular
+\end{lstlisting}
+\end{frame}
   
-  % --- Slide 2: Nó mínimo (rclpy) ---
   \begin{frame}[fragile]{Nó mínimo em \texttt{rclpy}}
     \begin{itemize}
       \item Elementos: \texttt{rclpy.init()}, classe \texttt{Node}, \texttt{rclpy.spin(node)}, \texttt{rclpy.shutdown()}.
       \item Componentes comuns: publisher(es), subscriber(s), \textbf{timers}, \textbf{callbacks}, \textbf{logs}.
       \item Encapsulamos lógica em uma subclasse de \texttt{Node}.
     \end{itemize}
-  
-  \begin{center}
-  \includegraphics[width=0.95\textwidth]{code1_minimal.png}
-  \end{center}
+
   \end{frame}
-  
+
+  \begin{frame}[fragile]{Exemplo de código: Nó mínimo em \texttt{rclpy}}
+    \begin{center}
+      \includegraphics[width=0.95\textwidth]{code1_minimal.png}
+    \end{center}
+  \end{frame}
   % --- Slide 3: Timers, callbacks e logs ---
   \begin{frame}[fragile]{Timers, callbacks e logs}
     \begin{itemize}
@@ -54,7 +86,6 @@
 
 \section{QoS (Quality of Service)}
   
-  % --- Slide 4: QoS — noções básicas ---
   \begin{frame}[fragile]{QoS — noções básicas}
     \begin{itemize}
       \item \textbf{depth} (History/KeepLast): tamanho do buffer de mensagens.
@@ -70,47 +101,40 @@
 
 \section{Implementação Prática}
   
-  % --- Slide 5: Publisher (Python) ---
   \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{Publisher em Python (minimal\_publisher.py)}}}
   \begin{center}
   \includegraphics[width=0.95\textwidth]{code4_publisher.png}
   \end{center}
   \end{frame}
   
-  % --- Slide 6: Subscriber (Python) ---
   \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}{\uline{Subscriber em Python (minimal\_subscriber.py)}}}
   \begin{center}
   \includegraphics[width=0.95\textwidth]{code5_subscriber.png}
   \end{center}
   \end{frame}
   
-  % --- Slide 7: Executando (do workspace) ---
   \begin{frame}[fragile]{Executar publisher \& subscriber}
     \begin{itemize}
       \item Em terminais separados, com o ambiente \textbf{sourced}.
     \end{itemize}
   
-    \begin{columns}[T,onlytextwidth]
-      \begin{column}{0.48\textwidth}
-        \textbf{Terminal 1 — Publisher}
-        \begin{lstlisting}[style=bashstyle]
+    \textbf{Terminal 1 — Publisher}
+    \begin{lstlisting}[style=bashstyle]
   $ source ~/ros2_ws/install/setup.bash
   $ ros2 run my_py_pkg minimal_publisher
-        \end{lstlisting}
-      \end{column}
-      \begin{column}{0.48\textwidth}
-        \textbf{Terminal 2 — Subscriber}
-        \begin{lstlisting}[style=bashstyle]
+    \end{lstlisting}
+    
+    \vspace{1em}
+    
+    \textbf{Terminal 2 — Subscriber}
+    \begin{lstlisting}[style=bashstyle]
   $ source ~/ros2_ws/install/setup.bash
   $ ros2 run my_py_pkg minimal_subscriber
-        \end{lstlisting}
-      \end{column}
-    \end{columns}
+    \end{lstlisting}
   \end{frame}
 
 \section{QoS na Prática}
   
-  % --- Slide 8: Ajustando QoS no código ---
   \begin{frame}[fragile]{QoS na prática (exemplo)}
     \begin{itemize}
       \item Combine \textbf{publisher} e \textbf{subscriber} com QoS compatível.

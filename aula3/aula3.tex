@@ -32,7 +32,7 @@
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Pastas de um workspace Catkin}
+\begin{frame}[fragile]{Pastas de um workspace ROS 2}
   \begin{center}
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{p{0.2\textwidth} p{0.70\textwidth}}
@@ -41,16 +41,13 @@
     \hline
     \rowcolor{white}
     Source &
-      Contém o código-fonte dos pacotes catkin. Cada subpasta em \texttt{src} corresponde a um ou mais pacotes. \\
+      Contém o código-fonte dos pacotes. Cada subpasta em \texttt{src} corresponde a um ou mais pacotes. \\
     \rowcolor{black!5}
     Build &
-      Onde o CMake é invocado para compilar os pacotes do \textit{source space}. CMake e catkin guardam aqui cache e arquivos intermediários. \\
+      Onde o colcon processa os pacotes do \textit{source space}. Guarda aqui cache e arquivos intermediários. \\
     \rowcolor{white}
-    Devel &
-      Onde os artefatos compilados ficam disponíveis antes da instalação (ambiente de desenvolvimento). \\
-    \rowcolor{black!5}
     Install &
-      Após compilar os alvos, eles podem ser instalados aqui executando o \textit{target} de instalação. \\
+      Após compilar os pacotes, eles são instalados aqui. É necessário fazer \texttt{source install/setup.bash} para usar os pacotes. \\
   \end{tabular}
   \end{center}
 \end{frame}
@@ -84,6 +81,20 @@ $ git clone https://github.com/ros2/examples src/examples -b humble
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]{Resolvendo Dependências (\texttt{rosdep})}
+  \begin{itemize}
+    \item Antes de compilar, garanta que você tem todas as dependências dos pacotes que baixou.
+    \item O comando \texttt{rosdep} lê os arquivos \texttt{package.xml} e instala o que falta.
+  \end{itemize}
+
+\begin{lstlisting}[style=bashstyle]
+# Na raiz do workspace (~/ros2_ws)
+$ sudo apt update && rosdep update
+$ rosdep install -i --from-path src --rosdistro humble -y
+\end{lstlisting}
+  \footnotesize{\textit{*Isso evita erros de "package not found" durante o build.}}
+\end{frame}
+
 \begin{frame}[fragile]{Buildando o workspace}
 
 \begin{itemize}
@@ -111,6 +122,21 @@ $ source install/setup.bash
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}{Conceito de Underlay e Overlay}
+  \begin{itemize}
+    \item \textbf{Underlay}: É o ambiente base do ROS 2 (instalação principal em \texttt{/opt/ros/humble}). Fornece os pacotes padrões.
+    \item \textbf{Overlay}: É o seu workspace secundário (ex: \texttt{\~/ros2\_ws}).
+    \item Ao fazer \texttt{source install/setup.bash} do seu workspace, você coloca seus pacotes "por cima" dos do sistema.
+    \item \textbf{Vantagem}: Permite modificar uma versão local de um pacote sem quebrar a instalação global.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Overlay e Underlay no ROS 2}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{aula3/images/overlay_underlay_ws.png}
+  \end{center}
+\end{frame}
+
 \begin{frame}[fragile]{\href{https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html}{\uline{Demo}}}
   \begin{itemize}
     \item Com o ambiente \textbf{sourced}, rode executáveis construídos com \texttt{colcon}.
@@ -122,7 +148,7 @@ $ source install/setup.bash
   \textbf{Terminal 1 — Subscriber:}
   \begin{lstlisting}[style=bashstyle]
 $ source /opt/ros/humble/setup.bash
-$ ros2 run examples_rclcpp_minimal_subscriber \
+$ ros2 run examples_rclpy_minimal_subscriber \
   subscriber_member_function
   \end{lstlisting}
 
@@ -130,7 +156,7 @@ $ ros2 run examples_rclcpp_minimal_subscriber \
   \textbf{Terminal 2 — Publisher:}
   \begin{lstlisting}[style=bashstyle]
 $ source /opt/ros/humble/setup.bash
-$ ros2 run examples_rclcpp_minimal_publisher \
+$ ros2 run examples_rclpy_minimal_publisher \
   publisher_member_function
   \end{lstlisting}
 \end{frame}
@@ -147,8 +173,8 @@ $ ros2 run examples_rclcpp_minimal_publisher \
   \item Cada pacote contém:
   \begin{itemize}
     \item \texttt{package.xml} — metadados e dependências.
-    \item \texttt{CMakeLists.txt} — configuração de build.
-    \item \texttt{src/} — código em \texttt{rclcpp} (C++) ou \texttt{rclpy} (Python).
+    \item \texttt{setup.py} — configuração de build (Python).
+    \item \texttt{src/} — código em \texttt{rclpy} (Python).
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -165,19 +191,18 @@ $ ros2 run examples_rclcpp_minimal_publisher \
   \begin{tabular}{p{0.28\textwidth} p{0.66\textwidth}}
     \textbf{Diretório} & \textbf{Explicação} \\
     \hline
-    \texttt{include/}       & Cabeçalhos (headers) C++ \\
-    \texttt{src/}           & Arquivos-fonte \\
+    \texttt{src/}           & Arquivos-fonte Python \\
     \texttt{msg/}           & Pasta com tipos de Mensagem (\texttt{.msg}) \\
     \texttt{srv/}           & Pasta com tipos de Serviço (\texttt{.srv}) \\
     \texttt{launch/}        & Pasta com arquivos de \emph{launch} \\
     \texttt{package.xml}    & Manifesto do pacote \\
-    \texttt{CMakeLists.txt} & Arquivo de build do CMake \\
+    \texttt{setup.py}       & Arquivo de build do Python \\
   \end{tabular}
   \end{center}
 
   \vspace{0.6em}
   \begin{itemize}
-    \item Arquivos-fonte implementam \textbf{nodes}; podem ser escritos em múltiplas linguagens.
+    \item Arquivos-fonte implementam \textbf{nodes} em Python.
     \item Nodes são executados individualmente ou em grupos usando \textbf{arquivos de launch}.
   \end{itemize}
 \end{frame}
@@ -186,7 +211,7 @@ $ ros2 run examples_rclcpp_minimal_publisher \
 \begin{frame}[fragile]{Criação de um Package — Visão geral}
   \begin{itemize}
     \item \textbf{colcon} usa o \texttt{package.xml}
-    \item Tipos de build recomendados: \textbf{ament\_cmake} (C++) e \textbf{ament\_python} (Python);
+    \item Tipo de build recomendado: \textbf{ament\_python} (Python);
     \item \texttt{ros2 pkg create} gera pacotes a partir de templates (equivalente ao \texttt{catkin\_create\_package} no catkin).
   \end{itemize}
 \end{frame}
@@ -222,7 +247,7 @@ $ exec bash
 % --- Frame 5: Setup colcon mixins ---
 \begin{frame}[fragile]{Setup \texttt{colcon} mixins}
   \begin{itemize}
-    \item \textbf{Mixins} são "atalhos" para opções de linha de comando comuns (ex.: modo Debug).
+    \item \textbf{Mixins} são "atalhos" para opções de linha de comando comuns.
     \item Instale e atualize o repositório de mixins padrão:
   \end{itemize}
 
@@ -234,7 +259,7 @@ $ colcon mixin update default
 
   \vspace{0.4em}
   \begin{itemize}
-    \item Usar o mixin \texttt{debug} (equivalente a \texttt{--cmake-args -DCMAKE\_BUILD\_TYPE=Debug}):
+    \item Exemplo de uso de mixin:
   \end{itemize}
 
   \begin{lstlisting}[style=bashstyle]
@@ -245,27 +270,14 @@ $ colcon build --mixin debug
 % --- Frame 6: Criar pacote com ros2 pkg create (conveniência) ---
 \begin{frame}[fragile]{Criar pacote com \texttt{ros2 pkg create}}
   \begin{itemize}
-    \item Gere um \textbf{template} de pacote rapidamente (C++ com \texttt{ament\_cmake} ou Python com \texttt{ament\_python}).
+    \item Gere um \textbf{template} de pacote rapidamente com \texttt{ament\_python} (Python).
   \end{itemize}
 
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
-      \textbf{C++ (ament\_cmake):}
-      \begin{lstlisting}[style=bashstyle]
-$ cd ~/ros2_ws/src
-$ ros2 pkg create --build-type ament_cmake \
-  my_cpp_pkg --dependencies rclcpp std_msgs
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \textbf{Python (ament\_python):}
-      \begin{lstlisting}[style=bashstyle]
+  \begin{lstlisting}[style=bashstyle]
 $ cd ~/ros2_ws/src
 $ ros2 pkg create --build-type ament_python \
   my_py_pkg --dependencies rclpy std_msgs
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
+  \end{lstlisting}
 \end{frame}
 
 
