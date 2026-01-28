@@ -1,0 +1,761 @@
+\title[Docker Tutorial]{Docker Tutorial}
+\author[Marcato]{Professor: André L. M. Marcato}
+\institute[UFJF]{Universidade Federal de Juiz de Fora \\ Curso de Engenharia Elétrica — Robótica e Automação Industrial}
+\date{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Roteiro}
+\tableofcontents
+\end{frame}
+
+\section{Requisitos Mínimos}
+
+\begin{frame}{Passo 1 — Checar Requisitos Mínimos}
+\begin{itemize}
+  \item Docker Desktop (modo Linux) usa o \textbf{WSL2}
+  \item Pré-requisitos: WSL2, Windows compatível e virtualização habilitada
+\end{itemize}
+\end{frame}
+
+\begin{frame}{1.1 Verificar Virtualização}
+\begin{itemize}
+  \item Abra o \textbf{Gerenciador de Tarefas} (Ctrl + Shift + Esc)
+  \item Aba \textbf{Desempenho} $\rightarrow$ \textbf{CPU}
+  \item Procure: \textbf{Virtualização: Habilitada/Enabled}
+  \item Se estiver \textbf{Desabilitada}, ajuste na BIOS/UEFI
+\end{itemize}
+\end{frame}
+
+\section{Instalar WSL2}
+
+\begin{frame}{Passo 2 — Instalar WSL2}
+\begin{itemize}
+  \item WSL2 é um Linux integrado no Windows
+  \item Necessário para o Docker Desktop funcionar corretamente
+\end{itemize}
+\end{frame}
+
+\begin{frame}{2.1 Abrir Terminal como Administrador}
+\begin{itemize}
+  \item Clique com botão direito no \textbf{menu iniciar}
+  \item Abra \textbf{Windows PowerShell (Admin)} ou \textbf{Terminal (Admin)}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.2 Instalar WSL}
+\begin{itemize}
+  \item Execute o comando de instalação do WSL
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl --install
+\end{bashprompt}
+
+\begin{itemize}
+  \item Instala o WSL2 e uma distro padrão (geralmente Ubuntu)
+  \item Pode pedir reinício do sistema
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.3 Atualizar o WSL}
+\begin{itemize}
+  \item Após reiniciar (se necessário), execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl --update
+\end{bashprompt}
+
+\begin{itemize}
+  \item Docker recomenda WSL 2 recente (ex.: 2.1.5+)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.4 Confirmar Versão WSL}
+\begin{itemize}
+  \item Verifique as distros instaladas e suas versões:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl -l -v
+\end{bashprompt}
+
+\begin{itemize}
+  \item Lista as distros instaladas no WSL e mostra a versão (1 ou 2)
+  \item Se aparecer \textbf{VERSION = 2}, você já tem o Linux base pronto
+  \item Se não houver distribuições, instale uma distro (próximo passo)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verificando WSL}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{00_wsl_installation.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Listar Distros Disponíveis}
+\begin{itemize}
+  \item Veja quais distros podem ser instaladas:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl --list --online
+\end{bashprompt}
+
+\begin{itemize}
+  \item Mostra distros que o Windows pode baixar e instalar automaticamente
+  \item Procure por \textbf{Ubuntu-22.04} (recomendado) ou \textbf{Ubuntu}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Instalar Ubuntu}
+\begin{itemize}
+  \item Se tiver Ubuntu-22.04 disponível:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl --install -d Ubuntu-22.04
+\end{bashprompt}
+
+\begin{itemize}
+  \item Baixa e instala a distro Linux dentro do WSL
+  \item Durante a primeira execução, o Ubuntu pedirá:
+  \begin{itemize}
+    \item Um nome de usuário Linux
+    \item Uma senha
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Instalação do Ubuntu}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{01_ubuntu_installation.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}{Configuração do Usuário}
+\begin{itemize}
+  \item Você verá: \texttt{Enter new UNIX username:}
+  \item Digite um nome simples (sem espaços)
+  \item Depois ele pede senha
+  \item Digite a senha e aperte Enter
+  \item Digite de novo para confirmar
+  \item \textbf{Importante}: quando você digita a senha no Linux, não aparece nada na tela (nem asteriscos)
+  \item Isso não é bug; é intencional
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Ubuntu Pronto}
+\begin{itemize}
+  \item Quando terminar, você verá um prompt como:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|username@DESKTOP-XXXXX:~$
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso significa que o Ubuntu está pronto e você está dentro dele
+\end{itemize}
+\end{frame}
+
+\section{Configurar Ubuntu}
+
+\begin{frame}[fragile]{Atualizar o Ubuntu}
+\begin{itemize}
+  \item Ainda dentro do terminal do Ubuntu, execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|sudo apt update
+\end{bashprompt}
+
+\begin{itemize}
+  \item \textbf{sudo}: executa como administrador do Linux (pode pedir sua senha)
+  \item \textbf{apt update}: atualiza a lista de pacotes disponíveis
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Instalar Atualizações}
+\begin{itemize}
+  \item Agora execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|sudo apt upgrade -y
+\end{bashprompt}
+
+\begin{itemize}
+  \item \textbf{apt upgrade}: instala atualizações dos pacotes já instalados
+  \item \textbf{-y}: responde "sim" automaticamente para perguntas
+  \item Se aparecer tela de configuração, na dúvida mantenha a versão atual (keep)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Confirmar Instalação no PowerShell}
+\begin{itemize}
+  \item Volte ao PowerShell e execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl -l -v
+\end{bashprompt}
+
+\begin{itemize}
+  \item Você deve ver: Ubuntu 22.04 listado, e uma coluna VERSION
+  \item Confirme que está em WSL2
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verificando WSL no PowerShell}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{02_verify_wsl.jpeg}
+\end{center}
+\end{frame}
+
+\section{Instalar Docker Desktop}
+
+\begin{frame}{Próximos Passos}
+\begin{itemize}
+  \item Instalar e validar o Docker Desktop (com integração ao WSL2)
+  \item Depois disso, entrar no ROS 2 Humble em Docker
+  \item Executar os primeiros tutoriais do link oficial
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Docker Desktop e WSL2}
+\begin{itemize}
+  \item No Windows, o Docker Desktop roda dentro de uma distro WSL própria
+  \item Só "conversa" com a sua Ubuntu quando você habilita a WSL integration
+  \item Instale pelo instalador do site oficial do Docker Desktop
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Instalar Docker Desktop}
+\begin{itemize}
+  \item Acesse a documentação oficial:
+\end{itemize}
+
+\begin{center}
+\url{https://docs.docker.com/desktop/setup/install/windows-install/}
+\end{center}
+
+\begin{itemize}
+  \item Baixe o instalador e siga as instruções
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Instalação do Docker Desktop}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{04_2_docker_installation.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}{Instalação e Login}
+\begin{itemize}
+  \item Siga os passos para instalação
+  \item Faça login no Docker Desktop
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Instalação do Docker Desktop}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{03_docker_isntallation.jpeg}
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{05_finish_docker_installation.jpeg}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Login no Docker Desktop}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{06_docker_login.jpeg}
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{07_docker_create_account.jpeg}
+\end{columns}
+\end{frame}
+
+\section{Configurar Docker Desktop}
+
+\begin{frame}{Configurar Docker Desktop}
+\begin{itemize}
+  \item Abra o Docker Desktop (Menu Iniciar)
+  \item Vá em \textbf{Settings} e configure:
+  \begin{itemize}
+    \item \textbf{General}: habilitado "Use the WSL 2 based engine"
+    \item \textbf{Resources} $\rightarrow$ \textbf{WSL Integration}: habilite a integração com Ubuntu-22.04
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{O que faz a WSL Integration}
+\begin{itemize}
+  \item O "motor" do Docker fica rodando em uma distro interna dele
+  \item A opção "WSL Integration" permite você digitar \texttt{docker ...} dentro do Ubuntu (WSL) e isso funcionar
+  \item Sem isso, o Docker não funciona dentro do WSL
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Configuração do Docker Desktop (1)}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{08_docker_config_1.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Configuração do Docker Desktop (2)}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{09_docker_config_2.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Reiniciar WSL (quando necessário)}
+\begin{itemize}
+  \item Se depois você abrir o Ubuntu e o comando \texttt{docker} não existir, rode no PowerShell:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|wsl --shutdown
+\end{bashprompt}
+
+\begin{itemize}
+  \item E então abra o Ubuntu de novo
+  \item Isso reinicia todas as distros WSL (é um "desliga e liga" do Linux interno)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Abrindo Ubuntu}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{10_open_ubuntu.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Testando Docker no Ubuntu}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{11_docker_in_ubuntu_hello_world.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Testar se o Docker está funcionando}
+\begin{itemize}
+  \item Abra o Ubuntu-22.04 (Menu Iniciar $\rightarrow$ Ubuntu 22.04)
+  \item Execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker --version
+\end{bashprompt}
+
+\begin{itemize}
+  \item Confirma que o comando docker está disponível
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Teste Padrão do Docker}
+\begin{itemize}
+  \item Execute o teste padrão:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker run --rm hello-world
+\end{bashprompt}
+
+\begin{itemize}
+  \item Baixa um container de teste ("hello-world")
+  \item Roda o container
+  \item Apaga ao final (\texttt{--rm}) para não acumular
+  \item Se isso funcionar, o Docker está pronto
+\end{itemize}
+\end{frame}
+
+\section{ROS 2 Humble em Docker}
+
+\begin{frame}[fragile]{Baixar e Entrar no ROS 2 Humble}
+\begin{itemize}
+  \item A documentação do ROS2 sugere usar a imagem \texttt{osrf/ros:humble-desktop}
+  \item No Ubuntu (WSL), baixe a imagem:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker pull osrf/ros:humble-desktop
+\end{bashprompt}
+\end{frame}
+
+\begin{frame}[fragile]{Entrar no Container ROS 2}
+\begin{itemize}
+  \item Depois entre no container:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker run -it --name ros2-humble osrf/ros:humble-desktop
+\end{bashprompt}
+
+\begin{itemize}
+  \item Você entra num "Linux isolado" que já tem ROS 2 Humble instalado
+  \item Para sair do container depois: \texttt{exit}
+  \item Para voltar a entrar no mesmo container (sem recriar):
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker start -ai ros2-humble
+\end{bashprompt}
+\end{frame}
+
+\section{ROS2 Tutorial}
+
+\begin{frame}{Configurar Ambiente ROS 2}
+\begin{itemize}
+  \item Sem "sourcing" do setup, o terminal não "enxerga" os comandos do ROS2
+  \item Dentro do container, configure o ambiente
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{4.1 Ligar o ROS2 no Terminal Atual}
+\begin{itemize}
+  \item Dentro do container, execute:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso ativa os comandos do ROS2 neste terminal
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{4.2 Fazer isso Automaticamente Sempre}
+\begin{itemize}
+  \item Para configurar automaticamente em cada abertura:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso coloca o comando no "arquivo de inicialização" do terminal do container
+  \item O ROS2 será carregado automaticamente ao entrar no container
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{4.3 Conferir Variáveis do ROS}
+\begin{itemize}
+  \item Verifique se as variáveis estão configuradas:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|printenv | grep -i ROS
+\end{bashprompt}
+
+\begin{itemize}
+  \item Você deve ver: \texttt{ROS\_DISTRO=humble}, \texttt{ROS\_VERSION=2}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Configuração do ROS 2}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{12_docker_ros2_setup.jpeg}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Retornar ao Container Após Reiniciar}
+\begin{itemize}
+  \item Caso você reinicie o computador, para retornar ao container:
+  \begin{enumerate}
+    \item Abra o Docker Desktop
+    \item Rode o container em "Actions"
+    \item Abra o terminal do Ubuntu
+    \item Execute:
+  \end{enumerate}
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker exec -it ros2-humble bash
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso te fará entrar no Docker que estava mexendo antes
+  \item Caso necessário, rode ainda:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+\end{bashprompt}
+
+\begin{itemize}
+  \item Para ter acesso aos comandos do ROS caso não tenha colocado isso no bashrc do seu container
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Retornando ao Container}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{13_docker_run_actions.png}
+\end{center}
+\end{frame}
+
+\section{Tutorial Turtlesim}
+
+\begin{frame}[fragile]{Como Abrir Vários Terminais}
+\begin{itemize}
+  \item O tutorial pede 2–3 terminais ao mesmo tempo
+  \item No Docker, a forma simples é:
+  \begin{itemize}
+    \item \textbf{Terminal A}: é onde você entrou no container ros2-humble
+    \item \textbf{Terminal B e C}: abra novas abas do Ubuntu (WSL) e rode:
+  \end{itemize}
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|docker exec -it ros2-humble bash
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso abre um "novo terminal" dentro do mesmo container
+  \item Regra prática: em cada terminal novo dentro do container, rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+\end{bashprompt}
+\end{frame}
+
+\begin{frame}
+\frametitle{Múltiplos Terminais}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{14_3_terminal.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{3.1 Instalar o Turtlesim}
+\begin{itemize}
+  \item No Terminal A (dentro do container), rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+|\nocopy{\textdollar\ }|apt update
+|\nocopy{\textdollar\ }|apt install -y ros-humble-turtlesim
+\end{bashprompt}
+
+\begin{itemize}
+  \item O tutorial usa \texttt{sudo apt ...}, mas em container você normalmente já está como admin (root)
+  \item Confirme que existe:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 pkg executables turtlesim
+\end{bashprompt}
+
+\begin{itemize}
+  \item Você deve ver executáveis como \texttt{turtlesim\_node} e \texttt{turtle\_teleop\_key}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{3.2 Iniciar o Turtlesim}
+\begin{itemize}
+  \item Ainda no Terminal A:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 run turtlesim turtlesim_node
+\end{bashprompt}
+
+\begin{itemize}
+  \item Isso inicia o "simulador da tartaruga" e deve aparecer a janela com o fundo azul
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Turtlesim em Execução}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{15_turtlesim.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{3.3 Controlar a Tartaruga pelo Teclado}
+\begin{itemize}
+  \item No Terminal B (outro shell no container):
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+|\nocopy{\textdollar\ }|ros2 run turtlesim turtle_teleop_key
+\end{bashprompt}
+
+\begin{itemize}
+  \item Agora clique/foco no terminal do \texttt{turtle\_teleop\_key} e use as setas do teclado para mover
+  \item Ela anda um pouco e para — isso é esperado
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Controlando a Tartaruga}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{16_terminal_2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{3.4 Ver Componentes do ROS}
+\begin{itemize}
+  \item No Terminal B, rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|ros2 node list
+|\nocopy{\textdollar\ }|ros2 topic list
+|\nocopy{\textdollar\ }|ros2 service list
+|\nocopy{\textdollar\ }|ros2 action list
+\end{bashprompt}
+
+\begin{itemize}
+  \item Esses comandos listam "quem está rodando" e como eles se conectam
+\end{itemize}
+\end{frame}
+
+\section{Instalar e Usar rqt}
+
+\begin{frame}[fragile]{4.1 Instalar rqt + Plugins}
+\begin{itemize}
+  \item No Terminal C:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+|\nocopy{\textdollar\ }|apt update
+|\nocopy{\textdollar\ }|apt install -y '~nros-humble-rqt*'
+\end{bashprompt}
+
+\begin{itemize}
+  \item Depois rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|rqt
+\end{bashprompt}
+
+\begin{itemize}
+  \item O rqt deve abrir uma janela (no começo pode vir vazia)
+  \item Se o menu "Plugins" vier incompleto, feche e rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|rqt --force-discover
+\end{bashprompt}
+\end{frame}
+
+\begin{frame}{4.2 Abrir o Service Caller no rqt}
+\begin{itemize}
+  \item Na janela do rqt:
+  \begin{itemize}
+    \item \textbf{Plugins} $\rightarrow$ \textbf{Services} $\rightarrow$ \textbf{Service Caller}
+    \item Clique no botão de refresh perto do dropdown de serviço
+    \item No dropdown, selecione o serviço \texttt{/spawn}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{rqt e Service Caller}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{17_rqt.png}
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{18_service_caller.png}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{4.2.1 Chamar o Serviço /spawn}
+\begin{itemize}
+  \item No formulário do \texttt{/spawn}:
+  \begin{itemize}
+    \item Defina \textbf{name} como \texttt{turtle2}
+    \item \textbf{x} = 1.0 e \textbf{y} = 1.0
+    \item Clique em \textbf{Call}
+  \end{itemize}
+  \item Se deu certo, aparece uma segunda tartaruga na janela do turtlesim
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Criando a Segunda Tartaruga}
+\begin{columns}[c,onlytextwidth]
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{19_spawn_service_caller.png}
+\column{.5\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{20_call_turtle.png}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{4.2.2 Chamar /set\_pen para Mudar a Cor}
+\begin{itemize}
+  \item Ainda no rqt, escolha o serviço \texttt{/turtle1/set\_pen}
+  \item Para deixar a linha vermelha e mais grossa:
+  \begin{itemize}
+    \item \textbf{r} = 255
+    \item \textbf{width} = 5
+  \end{itemize}
+  \item Depois clique \textbf{Call}
+  \item Quando você voltar ao terminal do teleop e mover a turtle1, a linha muda
+\end{itemize}
+\end{frame}
+
+\section{Remapping}
+
+\begin{frame}[fragile]{5) Remapping: Controlar a turtle2}
+\begin{itemize}
+  \item A turtle2 não tem teleop por padrão
+  \item O tutorial resolve isso "remapeando" o tópico de velocidade
+  \item Abra um Terminal D (ou reutilize um terminal livre) e rode:
+\end{itemize}
+
+\begin{bashprompt}
+|\nocopy{\textdollar\ }|source /opt/ros/humble/setup.bash
+|\nocopy{\textdollar\ }|ros2 run turtlesim turtle_teleop_key --ros-args --remap turtle1/cmd_vel:=turtle2/cmd_vel
+\end{bashprompt}
+
+\begin{itemize}
+  \item Agora:
+  \begin{itemize}
+    \item Quando esse terminal estiver "ativo", as setas controlam a turtle2
+    \item O outro teleop continua controlando a turtle1
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Controlando a Segunda Tartaruga}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{21_control_second_turtle.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{6) Encerrar Tudo}
+\begin{itemize}
+  \item No terminal do \texttt{turtlesim\_node}: \textbf{Ctrl + C}
+  \item Nos terminais do teleop: tecla \textbf{q}
+\end{itemize}
+\end{frame}

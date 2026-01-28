@@ -75,5 +75,28 @@
     "*.synctex.gz"
   ],
   "latex-workshop.view.pdf.viewer": "tab",
-  "latex-workshop.latex.outDir": "%DIR%"
+  "latex-workshop.latex.outDir": "%DIR%",
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.autoBuild.interval": 1000,
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+  "latex-workshop.latex.rootFile.indicator": "\\documentclass",
+  "latex-workshop.latex.rootFile.useSubFile": false,
+  "latex-workshop.latex.rootFile.doNotPrompt": true,
+  "files.associations": {
+    "*.tex": "latex"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/*.aux": true,
+    "**/*.log": true,
+    "**/*.fls": true,
+    "**/*.fdb_latexmk": true
+  },
+  "[latex]": {
+    "editor.defaultFormatter": "james-yu.latex-workshop"
+  }
 }
